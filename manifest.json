@@ -1,0 +1,23 @@
+{
+  "name": "Irregular Verbs Trainer",
+  "short_name": "Irregular Verbs",
+  "description": "Тренажёр неправильных английских глаголов",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
