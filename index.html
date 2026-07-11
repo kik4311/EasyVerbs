@@ -33,33 +33,36 @@
                     <span onclick="showBetaInfo()" class="text-[10px] font-bold text-yellow-300 bg-yellow-300/20 px-1.5 py-0.5 rounded-md leading-none cursor-pointer hover:bg-yellow-300/30 transition-colors shrink-0">BETA</span>
                 </div>
                 <div class="flex gap-px sm:gap-1 text-xs overflow-x-auto no-scrollbar">
-                    <button onclick="switchTab('dictionary')" id="tab-dictionary" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Словарь">
+                    <button onclick="switchTab('dictionary')" id="tab-dictionary" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Словарь" role="tab" aria-selected="true" aria-controls="view-dictionary">
                         <i class="fas fa-book"></i> <span class="nav-label" data-i18n="navDictionary">Словарь</span>
                         <span class="nav-progress-bar"><span class="nav-progress-fill" id="nav-prog-dictionary" style="width:0%"></span></span>
                     </button>
-                    <button onclick="switchTab('flashcards')" id="tab-flashcards" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Карточки">
+                    <button onclick="switchTab('flashcards')" id="tab-flashcards" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Карточки" role="tab" aria-selected="false" aria-controls="view-flashcards">
                         <i class="fas fa-clone"></i> <span class="nav-label" data-i18n="navFlashcards">Карточки</span>
                     </button>
-                    <button onclick="switchTab('letters')" id="tab-letters" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Буквы">
+                    <button onclick="switchTab('letters')" id="tab-letters" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Буквы" role="tab" aria-selected="false" aria-controls="view-letters">
                         <i class="fas fa-font"></i> <span class="nav-label" data-i18n="navLetters">Буквы</span>
                     </button>
-                    <button onclick="switchTab('trainer')" id="tab-trainer" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Формы">
+                    <button onclick="switchTab('trainer')" id="tab-trainer" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Формы" role="tab" aria-selected="false" aria-controls="view-trainer">
                         <i class="fas fa-dumbbell"></i> <span class="nav-label" data-i18n="navTrainer">Формы</span>
                     </button>
-                    <button onclick="switchTab('mistakes')" id="tab-mistakes" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Ошибки">
+                    <button onclick="switchTab('mistakes')" id="tab-mistakes" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Ошибки" role="tab" aria-selected="false" aria-controls="view-mistakes">
                         <i class="fas fa-tasks"></i> <span class="nav-label" data-i18n="navMistakes">Ошибки</span>
                     </button>
-                    <button onclick="switchTab('speed')" id="tab-speed" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Спринт">
+                    <button onclick="switchTab('speed')" id="tab-speed" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Спринт" role="tab" aria-selected="false" aria-controls="view-speed">
                         <i class="fas fa-bolt"></i> <span class="nav-label" data-i18n="navSpeed">Спринт</span>
                     </button>
-                    <button onclick="switchTab('updates')" id="tab-updates" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Обновления">
-                        <i class="fas fa-history"></i> <span class="nav-label" data-i18n="navUpdates">Обновления</span>
+                    <button onclick="switchTab('prepositions')" id="tab-prepositions" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Предлоги" role="tab" aria-selected="false" aria-controls="view-prepositions">
+                        <i class="fas fa-link"></i> <span class="nav-label" data-i18n="navPrepositions">Предлоги</span>
                     </button>
-                    <button onclick="switchTab('about')" id="tab-about" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="О сайте">
+                    <button onclick="switchTab('about')" id="tab-about" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="О сайте" role="tab" aria-selected="false" aria-controls="view-about">
                         <i class="fas fa-info-circle"></i> <span class="nav-label" data-i18n="navAbout">О сайте</span>
                     </button>
-                    <button onclick="openSettings()" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" title="Настройки">
+                    <button onclick="openSettings()" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" title="Настройки" aria-label="Настройки">
                         <i class="fas fa-cog"></i>
+                    </button>
+                    <button id="pwa-install-btn" onclick="installPWA()" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15 hidden" title="Установить приложение" aria-label="Установить приложение">
+                        <i class="fas fa-download"></i>
                     </button>
                 </div>
             </div>
@@ -89,7 +92,7 @@
                                 <span data-i18n="dictFavOnly">Только ⭐</span>
                             </label>
                             <div class="relative w-full sm:w-64">
-                                <input type="text" id="searchInput" onkeyup="filterDictionary()" placeholder="Поиск..." data-i18n="dictSearch" 
+                                <input type="text" id="searchInput" onkeyup="filterDictionary()" placeholder="Поиск..." data-i18n="dictSearch" aria-label="Поиск глаголов"
                                     class="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                                     <i class="fas fa-search text-slate-400"></i>
@@ -145,7 +148,7 @@
                 </div>
 
                 <div class="flex justify-center mb-6">
-                    <div class="flip-card cursor-pointer w-full max-w-md" onclick="flipCard()">
+                    <div class="flip-card cursor-pointer w-full max-w-md" onclick="flipCard()" role="button" aria-label="Перевернуть карточку" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
                         <div class="flip-card-inner relative">
                             <div class="backface-hidden bg-white rounded-2xl p-10 text-center min-h-[280px] flex flex-col items-center justify-center">
                                 <div class="flex items-center justify-center gap-3 mb-4">
@@ -852,8 +855,79 @@
                     <button onclick="resetSpeedRun()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hover:-translate-y-1" data-i18n="speedPlayAgain">
                         Спринт ещё раз
                     </button>
+
+                    <div class="mt-6" id="speed-leaderboard"></div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Секция Тренажера Предлогов -->
+        <section id="view-prepositions" class="view-section hidden">
+            <div class="max-w-2xl mx-auto">
+                <div id="prep-start" class="bg-white rounded-xl shadow-md p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-cyan-500 text-4xl">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4" data-i18n="prepTitle">Предлоги с глаголами</h2>
+                    <p class="text-slate-500 mb-6 max-w-md mx-auto" data-i18n="prepDesc">Вставьте правильный предлог к глаголу</p>
+                    <button onclick="startPrepositionTrainer()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-bold py-4 px-10 rounded-xl shadow-lg transition-all transform hover:scale-105 hover:-translate-y-1" data-i18n="prepStart">
+                        Начать тренировку
+                    </button>
+                </div>
+
+                <div id="prep-active" class="bg-white rounded-xl shadow-md p-6 sm:p-10 hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full text-sm" id="prep-progress">1 / 10</span>
+                        <div class="flex space-x-4 text-sm font-bold">
+                            <span class="text-green-500"><i class="fas fa-check"></i> <span id="prep-score">0</span></span>
+                            <span class="text-red-500"><i class="fas fa-times"></i> <span id="prep-mistakes">0</span></span>
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-10">
+                        <p class="text-slate-500 uppercase tracking-widest text-sm mb-2 font-semibold" data-i18n="prepDesc">Вставьте правильный предлог</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <h3 class="text-4xl font-extrabold text-indigo-600" id="prep-v1">listen</h3>
+                        </div>
+                        <p class="text-slate-500 text-sm mt-2" id="prep-translation">слушать</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <input type="text" id="prep-input" autocomplete="off" class="w-full px-4 py-4 bg-slate-50 border-2 border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all text-lg text-center" placeholder="Введите предлог...">
+                    </div>
+
+                    <div id="prep-feedback" class="p-4 rounded-lg text-center font-bold hidden text-lg"></div>
+
+                    <div class="mt-4 flex gap-3">
+                        <button id="btn-prep-check" onclick="checkPrepAnswer()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-colors text-lg" data-i18n="prepCheck">
+                            Проверить
+                        </button>
+                        <button id="btn-prep-next" onclick="nextPrepQuestion()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-colors text-lg hidden" data-i18n="prepNext">
+                            Далее
+                        </button>
+                    </div>
+                </div>
+
+                <div id="prep-results" class="bg-white rounded-xl shadow-md p-8 text-center hidden">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center mx-auto mb-4 text-green-500 text-3xl">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2" data-i18n="prepResultTitle">Тренировка завершена!</h2>
+                    <div class="flex justify-center gap-3 sm:gap-4 mb-8 flex-wrap">
+                        <div class="bg-green-50 p-4 sm:p-6 rounded-2xl border border-green-100 w-24 sm:w-28">
+                            <div class="text-2xl sm:text-3xl font-bold text-green-600 mb-1" id="prep-result-correct">0</div>
+                            <div class="text-xs sm:text-sm text-green-800 font-medium" data-i18n="prepCorrect">Верно</div>
+                        </div>
+                        <div class="bg-red-50 p-4 sm:p-6 rounded-2xl border border-red-100 w-24 sm:w-28">
+                            <div class="text-2xl sm:text-3xl font-bold text-red-600 mb-1" id="prep-result-wrong">0</div>
+                            <div class="text-xs sm:text-sm text-red-800 font-medium" data-i18n="prepWrong">Ошибок</div>
+                        </div>
+                    </div>
+                    <button onclick="document.getElementById('prep-results').classList.add('hidden'); document.getElementById('prep-start').classList.remove('hidden');" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hover:-translate-y-1" data-i18n="repeatAgain">
+                        Тренироваться еще раз
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -1060,6 +1134,12 @@
                                         <span class="font-semibold text-indigo-700">Спринт</span> — отвечайте на вопросы на время. 60 секунд, +1 сек за правильный ответ.
                                     </div>
                                 </li>
+                                <li class="flex gap-2.5">
+                                    <span class="w-6 h-6 rounded-full bg-indigo-200 text-indigo-700 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">7</span>
+                                    <div>
+                                        <span class="font-semibold text-indigo-700">Предлоги</span> — вставьте правильный предлог к глаголу (listen to, depend on, wait for и т.д.).
+                                    </div>
+                                </li>
                             </ul>
                         </div>
 
@@ -1126,8 +1206,18 @@
                             <p class="text-xs text-emerald-600 mt-3"><i class="fas fa-filter mr-1"></i> Используйте фильтр по группам в словаре и тренажёрах, чтобы изучать глаголы по этим шаблонам.</p>
                         </div>
 
+                        <div id="verb-of-day" class="hidden"></div>
+
+                        <div id="activity-graph" class="hidden"></div>
+
+                        <div class="text-center">
+                            <button id="pwa-install-btn-about" onclick="installPWA()" class="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hover:-translate-y-1 hidden">
+                                <i class="fas fa-download mr-2"></i><span data-i18n="pwaInstall">Установить приложение</span>
+                            </button>
+                        </div>
+
                         <div class="text-xs text-slate-400 text-center pt-2" data-i18n="aboutTech">Сделано на HTML, CSS и чистом JS</div>
-                        <div class="text-xs text-slate-300 text-center font-mono">v0.5.2-beta</div>
+                        <div class="text-xs text-slate-300 text-center font-mono">v0.5.3-beta</div>
                     </div>
                 </div>
             </div>
@@ -1529,6 +1619,22 @@
             </div>
             <p class="text-slate-500 text-sm leading-relaxed mb-5" data-i18n="betaDesc">Сайт находится в стадии активной разработки. Возможны частые обновления, изменения функционала и временные неполадки. Спасибо за понимание!</p>
             <button onclick="dismissBetaInfo()" class="w-full bg-yellow-50 hover:bg-yellow-100 text-yellow-700 font-semibold py-2.5 px-4 rounded-xl border border-yellow-200 transition-all text-sm" data-i18n="betaGotIt">Понятно</button>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal-overlay" onclick="if(event.target===this)confirmDialogCancel()">
+        <div class="modal-content" style="max-width:380px">
+            <div class="text-center">
+                <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4 text-red-500 text-2xl">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-2" id="confirm-modal-title"></h3>
+                <p class="text-slate-500 text-sm mb-6" id="confirm-modal-desc"></p>
+                <div class="flex gap-3">
+                    <button onclick="confirmDialogCancel()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-xl transition-colors" data-i18n="confirmCancel">Отмена</button>
+                    <button onclick="confirmDialogOk()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2.5 px-4 rounded-xl transition-colors" data-i18n="confirmOk">Подтвердить</button>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -104,6 +104,44 @@ const verbsData = [
     { v1: "write", v2: "wrote", v3: "written", translation: "писать", complexity: 1 }
 ];
 
+// ================= НАСТРОЙКИ ПО УМОЛЧАНИЮ =================
+const defaultSettings = {
+    questionCount: '10',
+    formsV1: true,
+    formsV2: true,
+    formsV3: true,
+    darkMode: false,
+    complexity: 'all',
+    gradientFrom: '#4f46e5',
+    gradientTo: '#7c3aed',
+    showTranslation: true,
+    autoAdvance: false,
+    shuffle: true,
+    compact: false,
+    welcomeShown: false,
+    lang: 'ru',
+    favorites: [],
+    favOnly: false,
+    achievements: {},
+    sessionsCompleted: 0,
+    totalCorrect: 0,
+    totalQuestions: 0,
+    bestStreak: 0,
+    verbsLearned: [],
+    customVerbs: [],
+    showTimer: false,
+    soundEnabled: true,
+    useSpacedRep: false,
+    verbLastSeen: {},
+    speedHighScore: 0,
+    verbGroup: 'all',
+    confidence: {},
+    activityLog: {},
+    speedHighScores: [],
+    verbOfDayDate: '',
+    verbOfDay: null
+};
+
 let settings = loadSettings();
 let errorStats = {};
 let mistakesList = [];
@@ -178,6 +216,7 @@ function switchTab(tabId) {
     });
     document.querySelectorAll('.nav-btn').forEach(el => {
         el.classList.remove('active');
+        el.setAttribute('aria-selected', 'false');
     });
 
     const targetSection = document.getElementById(`view-${tabId}`);
@@ -190,11 +229,14 @@ function switchTab(tabId) {
 
     const targetBtn = document.getElementById(`tab-${tabId}`);
     targetBtn.classList.add('active');
+    targetBtn.setAttribute('aria-selected', 'true');
 
     if (tabId === 'dictionary' && document.getElementById('dictionary-body').children.length === 0) {
         renderDictionary();
     } else if (tabId === 'flashcards') {
         updateFlashcard();
+    } else if (tabId === 'about') {
+        renderActivityGraph();
     }
 }
 
@@ -393,6 +435,35 @@ function prevCard() {
     }
     updateFlashcard();
 }
+
+// ================= КАРТОЧКИ — СВАЙП =================
+let touchStartX = 0;
+let touchStartY = 0;
+let touchMoved = false;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const flipCard = document.querySelector('.flip-card');
+    if (!flipCard) return;
+
+    flipCard.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+        touchMoved = false;
+    }, { passive: true });
+
+    flipCard.addEventListener('touchmove', function(e) {
+        touchMoved = true;
+    }, { passive: true });
+
+    flipCard.addEventListener('touchend', function(e) {
+        if (!touchMoved) return;
+        const dx = e.changedTouches[0].screenX - touchStartX;
+        const dy = e.changedTouches[0].screenY - touchStartY;
+        if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+        if (dx > 0) prevCard();
+        else nextCard();
+    }, { passive: true });
+});
 
 // ================= КАРТОЧКИ — РЕЖИМ ПРОВЕРКИ =================
 let fcQuizQueue = [];
@@ -1970,18 +2041,42 @@ function blendColor(c1, c2, ratio) {
     return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${bl.toString(16).padStart(2,'0')}`;
 }
 
+// ================= КАСТОМНЫЙ ДИАЛОГ ПОДТВЕРЖДЕНИЯ =================
+let confirmCallback = null;
+
+function showConfirmDialog(title, desc) {
+    return new Promise(function(resolve) {
+        confirmCallback = resolve;
+        document.getElementById('confirm-modal-title').textContent = title;
+        document.getElementById('confirm-modal-desc').textContent = desc;
+        document.getElementById('confirm-modal').classList.add('open');
+    });
+}
+
+function confirmDialogOk() {
+    document.getElementById('confirm-modal').classList.remove('open');
+    if (confirmCallback) { confirmCallback(true); confirmCallback = null; }
+}
+
+function confirmDialogCancel() {
+    document.getElementById('confirm-modal').classList.remove('open');
+    if (confirmCallback) { confirmCallback(false); confirmCallback = null; }
+}
+
 // ================= СБРОС =================
 function resetSettings() {
-    if (!confirm(__('setResetConfirm'))) return;
-    settings = { ...defaultSettings };
-    errorStats = {};
-    mistakesList = [];
-    localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
-    localStorage.removeItem('verbTrainerErrors');
-    document.body.classList.remove('dark');
-    setGradientCSS(defaultSettings.gradientFrom, defaultSettings.gradientTo);
-    applyCompactMode();
-    openSettings();
+    showConfirmDialog(__('setResetConfirm'), '').then(function(ok) {
+        if (!ok) return;
+        settings = { ...defaultSettings };
+        errorStats = {};
+        mistakesList = [];
+        localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
+        localStorage.removeItem('verbTrainerErrors');
+        document.body.classList.remove('dark');
+        setGradientCSS(defaultSettings.gradientFrom, defaultSettings.gradientTo);
+        applyCompactMode();
+        openSettings();
+    });
 }
 
 // ================= ДОБАВЛЕНИЕ СВОИХ ГЛАГОЛОВ =================
@@ -2274,28 +2369,173 @@ function isFavorite(v1Key) {
     return settings.favorites.indexOf(v1Key) !== -1;
 }
 
-// ================= TTS (Text-to-Speech) =================
-function speak(text, lang) {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang || 'en-US';
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
+// ================= ГЛАГОЛ ДНЯ =================
+function getVerbOfDay() {
+    const today = new Date().toISOString().slice(0, 10);
+    if (settings.verbOfDayDate === today && settings.verbOfDay) {
+        return settings.verbOfDay;
+    }
+    const allVerbs = getFullVerbList();
+    const seed = today.split('-').reduce(function(a, b) { return a * 31 + parseInt(b); }, 1);
+    const idx = seed % allVerbs.length;
+    settings.verbOfDay = allVerbs[idx];
+    settings.verbOfDayDate = today;
+    localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
+    return settings.verbOfDay;
+}
 
-    const voices = speechSynthesis.getVoices();
-    if (voices.length > 0) {
-        const prefs = ['Microsoft Zira Desktop', 'Microsoft Zira', 'Microsoft David', 'Google UK English Female', 'Google UK English Male', 'Samantha', 'Google US English'];
-        let found = null;
-        for (const name of prefs) {
-            found = voices.find(v => v.name === name);
-            if (found) break;
-        }
-        if (!found) found = voices.find(v => v.lang.startsWith('en')) || null;
-        if (found) utterance.voice = found;
+function renderVerbOfDay() {
+    const container = document.getElementById('verb-of-day');
+    if (!container) return;
+    const verb = getVerbOfDay();
+    if (!verb) return;
+    container.innerHTML = '<div class="bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200 rounded-xl p-4 text-center">' +
+        '<div class="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-2"><i class="fas fa-sun mr-1"></i> ' + __('verbOfDay') + '</div>' +
+        '<div class="text-2xl font-extrabold text-amber-800 mb-1">' + verb.v1 + '</div>' +
+        '<div class="text-sm text-amber-600">' + verb.v2 + ' → ' + verb.v3 + '</div>' +
+        '<div class="text-xs text-amber-500 mt-1">' + verb.translation + '</div>' +
+        '</div>';
+}
+
+// ================= ПРАКТИКА С ПРЕДЛОГАМИ =================
+const verbPrepositions = [
+    { v1: 'depend', preposition: 'on', translation: 'зависеть от' },
+    { v1: 'listen', preposition: 'to', translation: 'слушать' },
+    { v1: 'look', preposition: 'at', translation: 'смотреть на' },
+    { v1: 'look', preposition: 'for', translation: 'искать' },
+    { v1: 'look', preposition: 'after', translation: 'присматривать за' },
+    { v1: 'wait', preposition: 'for', translation: 'ждать' },
+    { v1: 'apologize', preposition: 'for', translation: 'извиняться за' },
+    { v1: 'belong', preposition: 'to', translation: 'принадлежать' },
+    { v1: 'believe', preposition: 'in', translation: 'верить в' },
+    { v1: 'consist', preposition: 'of', translation: 'состоять из' },
+    { v1: 'dream', preposition: 'about/of', translation: 'мечтать о' },
+    { v1: 'apply', preposition: 'for', translation: 'подавать на' },
+    { v1: 'argue', preposition: 'with', translation: 'спорить с' },
+    { v1: 'ask', preposition: 'for', translation: 'просить' },
+    { v1: 'care', preposition: 'about', translation: 'заботиться о' },
+    { v1: 'compare', preposition: 'with/to', translation: 'сравнивать с' },
+    { v1: 'concentrate', preposition: 'on', translation: 'сосредоточиться на' },
+    { v1: 'consist', preposition: 'of', translation: 'состоять из' },
+    { v1: 'insist', preposition: 'on', translation: 'настаивать на' },
+    { v1: 'laugh', preposition: 'at', translation: 'смеяться над' },
+    { v1: 'pay', preposition: 'for', translation: 'платить за' },
+    { v1: 'point', preposition: 'at', translation: 'указывать на' },
+    { v1: 'refer', preposition: 'to', translation: 'ссылаться на' },
+    { v1: 'rely', preposition: 'on', translation: 'полагаться на' },
+    { v1: 'succeed', preposition: 'in', translation: 'преуспеть в' },
+    { v1: 'suffer', preposition: 'from', translation: 'страдать от' },
+    { v1: 'think', preposition: 'about/of', translation: 'думать о' },
+    { v1: 'worry', preposition: 'about', translation: 'беспокоиться о' }
+];
+
+let prepQueue = [];
+let prepIdx = 0;
+let prepScore = 0;
+let prepMistakes = 0;
+let prepCurrentVerb = null;
+
+function startPrepositionTrainer() {
+    const filtered = shuffleArray([...verbPrepositions]).slice(0, Math.min(10, verbPrepositions.length));
+    prepQueue = filtered;
+    prepIdx = 0;
+    prepScore = 0;
+    prepMistakes = 0;
+
+    document.getElementById('prep-start').classList.add('hidden');
+    document.getElementById('prep-results').classList.add('hidden');
+    document.getElementById('prep-active').classList.remove('hidden');
+
+    loadPrepQuestion();
+}
+
+function loadPrepQuestion() {
+    if (prepIdx >= prepQueue.length) {
+        showPrepResults();
+        return;
+    }
+    prepCurrentVerb = prepQueue[prepIdx];
+    document.getElementById('prep-v1').textContent = prepCurrentVerb.v1;
+    document.getElementById('prep-translation').textContent = prepCurrentVerb.translation;
+    document.getElementById('prep-progress').textContent = (prepIdx + 1) + ' / ' + prepQueue.length;
+
+    const input = document.getElementById('prep-input');
+    input.value = '';
+    input.className = "w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-colors text-lg";
+    input.disabled = false;
+    input.focus();
+
+    document.getElementById('prep-feedback').classList.add('hidden');
+    document.getElementById('btn-prep-check').classList.remove('hidden');
+    document.getElementById('btn-prep-next').classList.add('hidden');
+}
+
+function checkPrepAnswer() {
+    const input = document.getElementById('prep-input');
+    const answer = input.value.trim().toLowerCase();
+    const acceptable = prepCurrentVerb.preposition.toLowerCase().split('/').map(function(s) { return s.trim(); });
+    const correct = acceptable.indexOf(answer) !== -1;
+
+    const feedback = document.getElementById('prep-feedback');
+    feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+
+    input.disabled = true;
+    if (correct) {
+        prepScore++;
+        playSound('correct');
+        input.className = "w-full px-4 py-3 bg-green-50 border-2 border-green-500 rounded-lg text-green-700 font-bold text-lg";
+        feedback.classList.add('bg-green-100', 'text-green-800');
+        feedback.innerHTML = '<i class="fas fa-check-circle mr-2"></i> ' + __('trCorrect');
+    } else {
+        prepMistakes++;
+        playSound('wrong');
+        input.className = "w-full px-4 py-3 bg-red-50 border-2 border-red-500 rounded-lg text-red-700 font-bold text-lg";
+        feedback.classList.add('bg-red-100', 'text-red-800');
+        feedback.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> ' + __('trError') + ' <b>' + prepCurrentVerb.preposition + '</b>';
     }
 
-    window.speechSynthesis.speak(utterance);
+    document.getElementById('btn-prep-check').classList.add('hidden');
+    document.getElementById('btn-prep-next').classList.remove('hidden');
+}
+
+function nextPrepQuestion() {
+    prepIdx++;
+    loadPrepQuestion();
+}
+
+function showPrepResults() {
+    document.getElementById('prep-active').classList.add('hidden');
+    document.getElementById('prep-results').classList.remove('hidden');
+    document.getElementById('prep-result-correct').textContent = prepScore;
+    document.getElementById('prep-result-wrong').textContent = prepMistakes;
+    trackSessionEnd(prepScore, prepScore + prepMistakes);
+}
+
+// ================= TTS (Text-to-Speech) =================
+function speak(text, lang) {
+    try {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang || 'en-US';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+
+        const voices = speechSynthesis.getVoices();
+        if (voices.length > 0) {
+            const prefs = ['Microsoft Zira Desktop', 'Microsoft Zira', 'Microsoft David', 'Google UK English Female', 'Google UK English Male', 'Samantha', 'Google US English'];
+            let found = null;
+            for (const name of prefs) {
+                found = voices.find(v => v.name === name);
+                if (found) break;
+            }
+            if (!found) found = voices.find(v => v.lang.startsWith('en')) || null;
+            if (found) utterance.voice = found;
+        }
+
+        utterance.onerror = function() {};
+        window.speechSynthesis.speak(utterance);
+    } catch (e) {}
 }
 
 function speakVerbForm(verb, formKey) {
@@ -2387,16 +2627,54 @@ function trackSessionEnd(correct, total) {
         if (idx === -1) settings.verbsLearned.push(k);
     });
 
+    if (!settings.activityLog) settings.activityLog = {};
+    const today = new Date().toISOString().slice(0, 10);
+    if (!settings.activityLog[today]) settings.activityLog[today] = { sessions: 0, correct: 0, total: 0 };
+    settings.activityLog[today].sessions++;
+    settings.activityLog[today].correct += correct;
+    settings.activityLog[today].total += total;
+
     localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
     checkAchievements();
     updateNavProgress();
+}
+
+function getActivityDays() {
+    if (!settings.activityLog) return [];
+    return Object.keys(settings.activityLog).sort().slice(-30);
+}
+
+function renderActivityGraph() {
+    const container = document.getElementById('activity-graph');
+    if (!container) return;
+    const days = getActivityDays();
+    if (days.length === 0) {
+        container.innerHTML = '<p class="text-sm text-slate-400 text-center">' + __('noActivity') + '</p>';
+        return;
+    }
+    const maxTotal = Math.max(...days.map(d => settings.activityLog[d].total));
+    let html = '<div class="flex items-end gap-1 justify-center" style="height:80px">';
+    days.forEach(function(day) {
+        const data = settings.activityLog[day];
+        const pct = maxTotal > 0 ? Math.round((data.total / maxTotal) * 100) : 0;
+        const accuracy = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+        const color = accuracy >= 80 ? 'bg-emerald-400' : accuracy >= 50 ? 'bg-amber-400' : 'bg-red-400';
+        html += '<div class="flex flex-col items-center gap-0.5" title="' + day + ': ' + data.sessions + ' ' + __('trOf') + ' ' + data.total + ' (' + accuracy + '%)">';
+        html += '<div class="w-3 sm:w-4 rounded-t ' + color + '" style="height:' + Math.max(4, pct) + '%"></div>';
+        html += '<div class="text-[8px] text-slate-400 -rotate-45 origin-left">' + day.slice(5) + '</div>';
+        html += '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
 }
 
 // ================= ЗВУКИ =================
 function playSound(type) {
     if (!settings.soundEnabled) return;
     try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
@@ -2535,6 +2813,11 @@ document.addEventListener('keydown', function(event) {
             const speedNext = document.getElementById('btn-speed-next');
             if (!speedCheck.classList.contains('hidden')) checkSpeedAnswer();
             else if (!speedNext.classList.contains('hidden')) loadSpeedQuestion();
+        }
+    }
+    if (event.key === 'Escape') {
+        if (document.getElementById('confirm-modal').classList.contains('open')) {
+            confirmDialogCancel();
         }
     }
 });
@@ -2738,8 +3021,35 @@ function endSpeedRun() {
     }
     document.getElementById('speed-high-score-display').textContent = Math.max(prev, speedScore);
 
+    if (!settings.speedHighScores) settings.speedHighScores = [];
+    settings.speedHighScores.push({ score: speedScore, accuracy: accuracy, date: new Date().toLocaleDateString() });
+    settings.speedHighScores.sort(function(a, b) { return b.score - a.score; });
+    settings.speedHighScores = settings.speedHighScores.slice(0, 10);
+    localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
+    renderSpeedLeaderboard();
+
     trackSessionEnd(speedScore, speedTotal);
     checkAchievements();
+}
+
+function renderSpeedLeaderboard() {
+    const container = document.getElementById('speed-leaderboard');
+    if (!container) return;
+    const scores = settings.speedHighScores || [];
+    if (scores.length === 0) {
+        container.innerHTML = '<p class="text-sm text-slate-400 text-center">' + __('noRecords') + '</p>';
+        return;
+    }
+    let html = '<div class="space-y-1.5">';
+    scores.forEach(function(entry, i) {
+        const medal = i === 0 ? '<i class="fas fa-trophy text-yellow-400"></i>' : i === 1 ? '<i class="fas fa-medal text-slate-400"></i>' : i === 2 ? '<i class="fas fa-medal text-amber-600"></i>' : '<span class="text-xs text-slate-400 w-5 text-center inline-block">' + (i + 1) + '</span>';
+        html += '<div class="flex items-center justify-between text-xs px-3 py-1.5 rounded-lg bg-slate-50">';
+        html += '<span class="flex items-center gap-2">' + medal + ' <span class="font-semibold">' + entry.score + '</span></span>';
+        html += '<span class="text-slate-400">' + entry.accuracy + '% · ' + entry.date + '</span>';
+        html += '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
 }
 
 function resetSpeedRun() {
@@ -2752,6 +3062,33 @@ function resetSpeedRun() {
     document.getElementById('speed-high-score-display').textContent = settings.speedHighScore || 0;
 }
 // ================= END SPEED RUN =================
+
+// ================= PWA INSTALL =================
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    const installBtn = document.getElementById('pwa-install-btn');
+    const installBtnAbout = document.getElementById('pwa-install-btn-about');
+    if (installBtn) installBtn.classList.remove('hidden');
+    if (installBtnAbout) installBtnAbout.classList.remove('hidden');
+});
+
+function installPWA() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(result) {
+        deferredPrompt = null;
+        const installBtn = document.getElementById('pwa-install-btn');
+        const installBtnAbout = document.getElementById('pwa-install-btn-about');
+        if (installBtn) installBtn.classList.add('hidden');
+        if (installBtnAbout) installBtnAbout.classList.add('hidden');
+        if (result.outcome === 'accepted') {
+            showToast(__('pwaInstalled'), 'success');
+        }
+    });
+}
 
 // ================= ИНИЦИАЛИЗАЦИЯ =================
 const origSwitchTab = switchTab;
@@ -2789,6 +3126,8 @@ window.onload = () => {
     }
     applyLanguage();
     updateNavProgress();
+    renderVerbOfDay();
+    renderSpeedLeaderboard();
     const savedGroup = settings.verbGroup || 'all';
     if (savedGroup !== 'all') {
         const dictBtn = document.getElementById(`dict-group-${savedGroup}`);
@@ -2808,5 +3147,12 @@ window.onload = () => {
     }
     if (!settings.welcomeShown) {
         setTimeout(showWelcome, 400);
+    }
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            if (settings.darkMode === undefined || settings.darkMode === null) {
+                document.body.classList.toggle('dark', e.matches);
+            }
+        });
     }
 };
