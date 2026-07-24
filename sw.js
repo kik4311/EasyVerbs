@@ -1,3 +1,7 @@
+// Irregular Verbs Trainer
+// Copyright (C) 2026 Manankik43
+// This program is free software under GPL v3 - see LICENSE
+
 const CACHE = 'irregular-verbs-v0.5.3';
 const URLS = [
   '/',

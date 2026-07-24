@@ -1,3 +1,7 @@
+// Irregular Verbs Trainer
+// Copyright (C) 2026 Manankik43
+// This program is free software under GPL v3 - see LICENSE
+
 // База данных неправильных глаголов
 const verbsData = [
     { v1: "be", v2: "was/were", v3: "been", translation: "быть", complexity: 1 },

@@ -1,4 +1,8 @@
-﻿const translations = {
+﻿// Irregular Verbs Trainer
+// Copyright (C) 2026 Manankik43
+// This program is free software under GPL v3 - see LICENSE
+
+const translations = {
     ru: {
         navDictionary: 'Словарь',
         navFlashcards: 'Карточки',
