@@ -652,6 +652,18 @@ function showVerbDetail(v1Key) {
     }
     const isFav = isFavorite(v1Key);
     html += '<div class="flex justify-between px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">В избранном</span><span class="font-bold ' + (isFav ? 'text-yellow-500' : 'text-slate-400') + '"><i class="fas fa-star' + (isFav ? '' : '-regular') + '"></i></span></div>';
+
+    const shuffledTemplates = [...sentenceTemplates].sort(() => Math.random() - 0.5).slice(0, 2);
+    let examplesHtml = '<div class="border-t border-slate-200 pt-3 mt-2"><div class="text-sm font-bold text-slate-700 mb-2"><i class="fas fa-quote-right mr-1"></i>Примеры</div><div class="space-y-2">';
+    shuffledTemplates.forEach(function(t) {
+        const formKey = t.form;
+        const correctForm = verb[formKey] || '';
+        const sent = t.text.replace('{v1}', verb.v1).replace('___', '<b>' + correctForm + '</b>');
+        examplesHtml += '<div class="px-3 py-2 bg-indigo-50 rounded-lg text-sm text-slate-700 leading-relaxed">' + sent + '</div>';
+    });
+    examplesHtml += '</div></div>';
+    html += examplesHtml;
+
     document.getElementById('verb-detail-body').innerHTML = html;
     document.getElementById('verb-detail-modal').classList.add('open');
 }
