@@ -2,7 +2,7 @@
   "name": "Irregular Verbs Trainer",
   "short_name": "Irregular Verbs",
   "description": "Тренажёр неправильных английских глаголов",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4f46e5",
