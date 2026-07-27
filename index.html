@@ -428,6 +428,9 @@
                     <button onclick="startTrainer()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-bold py-4 px-10 rounded-xl shadow-lg transition-all transform hover:scale-105 hover:-translate-y-1" data-i18n="trStart">
                         Начать тренировку
                     </button>
+                    <button onclick="startMarathon()" class="mt-3 bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold py-4 px-10 rounded-xl shadow-lg transition-all transform hover:scale-105 hover:-translate-y-1">
+                        <i class="fas fa-infinity mr-2"></i> Марафон
+                    </button>
                 </div>
 
                 <div id="trainer-active" class="bg-white rounded-xl shadow-md p-6 sm:p-10 hidden">
@@ -524,6 +527,11 @@
                             Следующее слово
                         </button>
                     </div>
+                    <div class="mt-4 text-center">
+                        <button id="btn-marathon-finish" onclick="finishMarathon()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors text-sm hidden">
+                            <i class="fas fa-stop-circle mr-1"></i> Завершить марафон
+                        </button>
+                    </div>
                 </div>
 
                 <div id="trainer-results" class="bg-white rounded-xl shadow-md p-8 text-center hidden">
@@ -555,6 +563,9 @@
                         <button id="btn-trainer-review" onclick="switchTab('mistakes')" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hover:-translate-y-1 hidden" data-i18n="setMistakes">
                             <i class="fas fa-redo mr-2"></i> Повторить ошибки
                         </button>
+                    </div>
+                    <div id="marathon-result-total" class="hidden mt-4 text-sm text-slate-500">
+                        <i class="fas fa-infinity text-orange-500 mr-1"></i> <span id="marathon-total-verbs">0</span> глаголов пройдено
                     </div>
                 </div>
 

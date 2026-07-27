@@ -1042,6 +1042,8 @@ let trainerScore = 0;
 let trainerMistakes = 0;
 let currentVerb = null;
 let trainerMode = 'normal';
+let isMarathon = false;
+let trainerTotalAnswered = 0;
 
 function setTrainerMode(mode) {
     trainerMode = mode;
@@ -1064,19 +1066,54 @@ function startTrainer() {
     currentQuestionIndex = 0;
     trainerScore = 0;
     trainerMistakes = 0;
+    isMarathon = false;
+    trainerTotalAnswered = 0;
+
+    document.getElementById('btn-marathon-finish').classList.add('hidden');
+    document.getElementById('marathon-result-total').classList.add('hidden');
 
     updateTrainerScoreboard();
     startSessionTimer('trainer-timer');
     loadTrainerQuestion();
 }
 
+function startMarathon() {
+    document.getElementById('trainer-start').classList.add('hidden');
+    document.getElementById('trainer-results').classList.add('hidden');
+    document.getElementById('trainer-active').classList.remove('hidden');
+
+    const filteredVerbs = getFilteredVerbs();
+    trainerQueue = shuffleArray(filteredVerbs);
+    currentQuestionIndex = 0;
+    trainerScore = 0;
+    trainerMistakes = 0;
+    isMarathon = true;
+    trainerTotalAnswered = 0;
+
+    document.getElementById('btn-marathon-finish').classList.remove('hidden');
+    document.getElementById('marathon-result-total').classList.add('hidden');
+
+    updateTrainerScoreboard();
+    startSessionTimer('trainer-timer');
+    loadTrainerQuestion();
+}
+
+function finishMarathon() {
+    showTrainerResults();
+}
+
 function updateTrainerScoreboard() {
     document.getElementById('trainer-score').textContent = trainerScore;
     document.getElementById('trainer-mistakes').textContent = trainerMistakes;
-    const totalQuestions = getQuestionCount();
-    const progress = Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100);
-    document.getElementById('trainer-progress-bar').style.width = progress + '%';
-    document.getElementById('trainer-progress').textContent = __('trQuestion') + ' ' + (currentQuestionIndex + 1) + ' ' + __('trOf') + ' ' + totalQuestions;
+    if (isMarathon) {
+        document.getElementById('trainer-progress').textContent = __('trQuestion') + ' ' + (currentQuestionIndex + 1);
+        document.getElementById('trainer-progress-bar').style.width = '100%';
+    } else {
+        const totalQuestions = getQuestionCount();
+        const progress = Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100);
+        document.getElementById('trainer-progress-bar').style.width = progress + '%';
+        document.getElementById('trainer-progress').textContent = __('trQuestion') + ' ' + (currentQuestionIndex + 1) + ' ' + __('trOf') + ' ' + totalQuestions;
+    }
 }
 
 const sentenceTemplates = [
@@ -1483,11 +1520,20 @@ function checkTrainerAnswer() {
 
 function nextTrainerQuestion() {
     currentQuestionIndex++;
-    const questionCount = getQuestionCount();
-    if (currentQuestionIndex < questionCount) {
+    if (isMarathon) {
+        trainerTotalAnswered = Math.max(trainerTotalAnswered, currentQuestionIndex);
+        if (currentQuestionIndex >= trainerQueue.length) {
+            trainerQueue = shuffleArray(getFilteredVerbs());
+            currentQuestionIndex = 0;
+        }
         loadTrainerQuestion();
     } else {
-        showTrainerResults();
+        const questionCount = getQuestionCount();
+        if (currentQuestionIndex < questionCount) {
+            loadTrainerQuestion();
+        } else {
+            showTrainerResults();
+        }
     }
 }
 
@@ -1500,6 +1546,16 @@ function showTrainerResults() {
     const trainerTime = document.getElementById('result-time');
     if (trainerTime) trainerTime.textContent = getSessionDuration();
     stopSessionTimer();
+
+    document.getElementById('btn-marathon-finish').classList.add('hidden');
+
+    if (isMarathon) {
+        const totalDone = Math.max(trainerTotalAnswered, currentQuestionIndex);
+        document.getElementById('marathon-result-total').classList.remove('hidden');
+        document.getElementById('marathon-total-verbs').textContent = totalDone;
+    } else {
+        document.getElementById('marathon-result-total').classList.add('hidden');
+    }
 
     const reviewBtn = document.getElementById('btn-trainer-review');
     if (reviewBtn) {
