@@ -41,6 +41,10 @@
     --bg-glow-1: rgba(79,70,229,0.04);
     --bg-glow-2: rgba(6,182,212,0.03);
     --bg-glow-3: rgba(124,58,237,0.03);
+    --blob-1: rgba(79,70,229,0.18);
+    --blob-2: rgba(6,182,212,0.12);
+    --blob-3: rgba(97,76,211,0.10);
+    --blob-4: rgba(79,70,229,0.08);
 }
 
 body.dark {
@@ -73,6 +77,10 @@ body.dark {
     --bg-glow-1: rgba(79,70,229,0.07);
     --bg-glow-2: rgba(6,182,212,0.05);
     --bg-glow-3: rgba(124,58,237,0.05);
+    --blob-1: rgba(79,70,229,0.18);
+    --blob-2: rgba(6,182,212,0.14);
+    --blob-3: rgba(97,76,211,0.12);
+    --blob-4: rgba(79,70,229,0.10);
 }
 
 /* ===================== БАЗОВЫЕ СТИЛИ ===================== */
@@ -84,10 +92,92 @@ body {
     color: var(--text-primary);
     min-height: 100vh;
     transition: background 0.35s, color 0.35s;
-    background-image:
-        radial-gradient(ellipse at 15% 50%, var(--bg-glow-1) 0%, transparent 55%),
-        radial-gradient(ellipse at 85% 30%, var(--bg-glow-2) 0%, transparent 55%),
-        radial-gradient(ellipse at 50% 80%, var(--bg-glow-3) 0%, transparent 55%);
+}
+
+main, footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===================== АНИМИРОВАННЫЕ BLOB-ПЯТНА ===================== */
+#bg-blobs {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    will-change: transform;
+}
+
+.blob-1 {
+    width: 55vmax;
+    height: 55vmax;
+    top: -20%;
+    left: -15%;
+    background: var(--blob-1);
+    animation: blobDrift1 28s ease-in-out infinite;
+}
+
+.blob-2 {
+    width: 50vmax;
+    height: 50vmax;
+    bottom: -25%;
+    right: -10%;
+    background: var(--blob-2);
+    animation: blobDrift2 32s ease-in-out infinite;
+}
+
+.blob-3 {
+    width: 45vmax;
+    height: 45vmax;
+    top: 40%;
+    left: 50%;
+    background: var(--blob-3);
+    animation: blobDrift3 36s ease-in-out infinite;
+}
+
+.blob-4 {
+    width: 40vmax;
+    height: 40vmax;
+    top: 60%;
+    left: 15%;
+    background: var(--blob-4);
+    animation: blobDrift4 30s ease-in-out infinite;
+}
+
+@keyframes blobDrift1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(8%, -6%) scale(1.06); }
+    50% { transform: translate(-4%, 10%) scale(0.94); }
+    75% { transform: translate(6%, 4%) scale(1.02); }
+}
+
+@keyframes blobDrift2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(-6%, 8%) scale(0.95); }
+    50% { transform: translate(10%, -4%) scale(1.07); }
+    75% { transform: translate(-5%, -8%) scale(1.01); }
+}
+
+@keyframes blobDrift3 {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    33% { transform: translate(-45%, -55%) scale(1.08); }
+    66% { transform: translate(-55%, -45%) scale(0.92); }
+}
+
+@keyframes blobDrift4 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(10%, -10%) scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .blob { animation: none !important; }
 }
 
 ::selection { background: var(--primary); color: white; }
@@ -103,7 +193,7 @@ nav.sticky {
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
 }
 body.dark nav.sticky {
-    background: linear-gradient(135deg, rgba(15,23,42,0.92), rgba(30,27,75,0.92)) !important;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--gradient-from) 65%, #000), color-mix(in srgb, var(--gradient-to) 65%, #000)) !important;
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
@@ -176,6 +266,34 @@ body.dark .nav-btn.active {
     #achievement-toast { left: 1rem; right: 1rem; bottom: 1rem; text-align: center; justify-content: center; }
     #letters-verb-card .grid { gap: 0.5rem !important; }
     #letters-verb-card .bg-white { padding: 0.5rem !important; }
+}
+
+/* ===================== ПРЕСЕТЫ АКЦЕНТОВ ===================== */
+.accent-btn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    outline: none;
+}
+.accent-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.accent-btn.active {
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 3px var(--primary-bg), 0 0 0 1.5px var(--text-primary);
+    transform: scale(1.1);
+}
+body.dark .accent-btn {
+    border-color: var(--border-color);
+}
+body.dark .accent-btn.active {
+    border-color: #f0f4ff;
+    box-shadow: 0 0 0 3px rgba(129,140,248,0.25), 0 0 0 1.5px #f0f4ff;
 }
 
 /* ===================== КАРТОЧКИ (ОСНОВНЫЕ БЛОКИ) ===================== */
@@ -720,7 +838,7 @@ body.dark .bg-purple-50 { background: rgba(129,140,248,0.08) !important; }
 body.dark .bg-purple-50\/50 { background: rgba(129,140,248,0.05) !important; }
 body.dark .bg-indigo-50\/50 { background: rgba(129,140,248,0.05) !important; }
 body.dark .text-indigo-600 { color: var(--primary-light) !important; }
-body.dark .bg-indigo-600:not(.nav-btn):not(.fc-group-btn) { background: linear-gradient(135deg, #3730a3, #4c1d95) !important; }
+body.dark .bg-indigo-600:not(.nav-btn):not(.fc-group-btn) { background: linear-gradient(135deg, color-mix(in srgb, var(--gradient-from) 70%, #000), color-mix(in srgb, var(--gradient-to) 70%, #000)) !important; }
 body.dark .bg-indigo-700 { background: #312e81 !important; }
 body.dark .bg-indigo-800 { background: #1e1b4b !important; }
 body.dark .hover\:bg-indigo-700:hover { background: rgba(255,255,255,0.1) !important; }

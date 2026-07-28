@@ -143,13 +143,25 @@ const defaultSettings = {
     activityLog: {},
     speedHighScores: [],
     verbOfDayDate: '',
-    verbOfDay: null
+    verbOfDay: null,
+    accentPreset: 'indigo'
 };
 
 let settings = loadSettings();
 let errorStats = {};
 let mistakesList = [];
 let practiceMode = 'normal';
+
+// ================= ПРЕСЕТЫ АКЦЕНТОВ =================
+const accentPresets = {
+    indigo: { from: '#4f46e5', to: '#7c3aed', label: 'Indigo' },
+    emerald: { from: '#059669', to: '#10b981', label: 'Emerald' },
+    rose: { from: '#e11d48', to: '#f43f5e', label: 'Rose' },
+    amber: { from: '#d97706', to: '#f59e0b', label: 'Amber' },
+    sky: { from: '#0284c7', to: '#06b6d4', label: 'Sky' },
+    violet: { from: '#7c3aed', to: '#a855f7', label: 'Violet' },
+    slate: { from: '#475569', to: '#64748b', label: 'Slate' }
+};
 
 // ================= НАСТРОЙКИ =================
 function loadSettings() {
@@ -166,7 +178,7 @@ function loadSettings() {
         loaded = { ...defaultSettings };
     }
     loadErrorStats();
-    ['gradientFrom', 'gradientTo', 'showTranslation', 'autoAdvance', 'shuffle', 'compact', 'welcomeShown', 'lang', 'favOnly', 'favorites', 'customVerbs', 'achievements', 'sessionsCompleted', 'totalCorrect', 'totalQuestions', 'bestStreak', 'verbsLearned', 'showTimer', 'soundEnabled', 'useSpacedRep', 'verbLastSeen', 'speedHighScore', 'verbGroup', 'confidence'].forEach(k => {
+    ['gradientFrom', 'gradientTo', 'showTranslation', 'autoAdvance', 'shuffle', 'compact', 'welcomeShown', 'lang', 'favOnly', 'favorites', 'customVerbs', 'achievements', 'sessionsCompleted', 'totalCorrect', 'totalQuestions', 'bestStreak', 'verbsLearned', 'showTimer', 'soundEnabled', 'useSpacedRep', 'verbLastSeen', 'speedHighScore', 'verbGroup', 'confidence', 'accentPreset'].forEach(k => {
         if (loaded[k] === undefined) loaded[k] = defaultSettings[k];
     });
     if (!hadSaved) {
@@ -2012,6 +2024,7 @@ function openSettings() {
         btnMistakes.classList.add('hidden');
     }
 
+    updateAccentPresetUI();
     applyLanguage();
     document.getElementById('settings-modal').classList.add('open');
 }
@@ -2026,6 +2039,27 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark', settings.darkMode);
     setGradientCSS(settings.gradientFrom || '#4f46e5', settings.gradientTo || '#7c3aed');
     localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
+    updateAccentPresetUI();
+}
+
+function setAccentPreset(name) {
+    const preset = accentPresets[name];
+    if (!preset) return;
+    settings.accentPreset = name;
+    settings.gradientFrom = preset.from;
+    settings.gradientTo = preset.to;
+    document.getElementById('setting-gradient-from').value = preset.from;
+    document.getElementById('setting-gradient-to').value = preset.to;
+    setGradientCSS(preset.from, preset.to);
+    saveSettings();
+    updateAccentPresetUI();
+    showToast(__('setAccentPresets') + ': ' + preset.label, 'success');
+}
+
+function updateAccentPresetUI() {
+    document.querySelectorAll('.accent-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.preset === settings.accentPreset);
+    });
 }
 
 function applyGradientColor() {
@@ -2033,26 +2067,40 @@ function applyGradientColor() {
     const to = document.getElementById('setting-gradient-to').value;
     settings.gradientFrom = from;
     settings.gradientTo = to;
+    settings.accentPreset = '';
     setGradientCSS(from, to);
     saveSettings();
+    updateAccentPresetUI();
 }
 
 function setGradientCSS(from, to) {
     const r = document.documentElement.style;
+    const isDark = document.body.classList.contains('dark');
+    if (isDark) {
+        from = darkenColor(from, 20);
+        to = darkenColor(to, 20);
+    }
     r.setProperty('--gradient-from', from);
     r.setProperty('--gradient-to', to);
     r.setProperty('--primary', from);
     r.setProperty('--primary-light', blendColor(from, to, 0.5));
     r.setProperty('--primary-dark', darkenColor(from, 20));
-    r.setProperty('--primary-bg', hexToRgba(from, 0.08));
-    r.setProperty('--primary-glow', hexToRgba(from, 0.25));
-    const isDark = document.body.classList.contains('dark');
+    r.setProperty('--primary-bg', hexToRgba(from, isDark ? 0.12 : 0.08));
+    r.setProperty('--primary-glow', hexToRgba(from, isDark ? 0.3 : 0.25));
     const alpha1 = isDark ? '0.10' : '0.04';
     const alpha2 = isDark ? '0.07' : '0.03';
     const alpha3 = isDark ? '0.07' : '0.03';
     r.setProperty('--bg-glow-1', hexToRgba(from, parseFloat(alpha1)));
     r.setProperty('--bg-glow-2', hexToRgba(to, parseFloat(alpha2)));
     r.setProperty('--bg-glow-3', hexToRgba(to, parseFloat(alpha3)));
+    const blobAlpha1 = isDark ? '0.20' : '0.18';
+    const blobAlpha2 = isDark ? '0.16' : '0.12';
+    const blobAlpha3 = isDark ? '0.14' : '0.10';
+    const blobAlpha4 = isDark ? '0.12' : '0.08';
+    r.setProperty('--blob-1', hexToRgba(from, parseFloat(blobAlpha1)));
+    r.setProperty('--blob-2', hexToRgba(to, parseFloat(blobAlpha2)));
+    r.setProperty('--blob-3', hexToRgba(blendColor(from, to, 0.5), parseFloat(blobAlpha3)));
+    r.setProperty('--blob-4', hexToRgba(from, parseFloat(blobAlpha4)));
 }
 
 function switchSettingsTab(tab, btn) {
@@ -2147,6 +2195,7 @@ function resetSettings() {
         document.body.classList.remove('dark');
         setGradientCSS(defaultSettings.gradientFrom, defaultSettings.gradientTo);
         applyCompactMode();
+        updateAccentPresetUI();
         openSettings();
     });
 }
@@ -3178,13 +3227,13 @@ switchTab = function(tabId) {
 };
 
 window.onload = () => {
+    if (settings.darkMode) {
+        document.body.classList.add('dark');
+    }
     setGradientCSS(settings.gradientFrom || '#4f46e5', settings.gradientTo || '#7c3aed');
     applyCompactMode();
     renderDictionary();
     setFlashcardGroup('all');
-    if (settings.darkMode) {
-        document.body.classList.add('dark');
-    }
     if (document.getElementById('setting-complexity')) {
         document.getElementById('setting-complexity').value = settings.complexity || 'all';
     }
@@ -3224,6 +3273,7 @@ window.onload = () => {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
             if (settings.darkMode === undefined || settings.darkMode === null) {
                 document.body.classList.toggle('dark', e.matches);
+                setGradientCSS(settings.gradientFrom || '#4f46e5', settings.gradientTo || '#7c3aed');
             }
         });
     }

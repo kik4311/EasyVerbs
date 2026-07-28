@@ -27,6 +27,13 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col">
 
+    <div id="bg-blobs" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
     <nav class="text-white sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-3 sm:px-5">
             <div class="flex justify-between items-center h-14 sm:h-16">
@@ -1438,6 +1445,18 @@
                                     <span class="text-xs text-slate-400 font-medium" data-i18n="setGradientTo">До</span>
                                     <input type="color" id="setting-gradient-to" value="#7c3aed" onchange="applyGradientColor()" class="color-picker">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-1">
+                            <div class="text-xs font-semibold text-slate-500 mb-2" data-i18n="setAccentPresets">Быстрый выбор акцента</div>
+                            <div class="flex flex-wrap gap-1.5" id="accent-presets">
+                                <button onclick="setAccentPreset('indigo')" class="accent-btn" data-preset="indigo" style="background:linear-gradient(135deg,#4f46e5,#7c3aed)" title="Indigo"></button>
+                                <button onclick="setAccentPreset('emerald')" class="accent-btn" data-preset="emerald" style="background:linear-gradient(135deg,#059669,#10b981)" title="Emerald"></button>
+                                <button onclick="setAccentPreset('rose')" class="accent-btn" data-preset="rose" style="background:linear-gradient(135deg,#e11d48,#f43f5e)" title="Rose"></button>
+                                <button onclick="setAccentPreset('amber')" class="accent-btn" data-preset="amber" style="background:linear-gradient(135deg,#d97706,#f59e0b)" title="Amber"></button>
+                                <button onclick="setAccentPreset('sky')" class="accent-btn" data-preset="sky" style="background:linear-gradient(135deg,#0284c7,#06b6d4)" title="Sky"></button>
+                                <button onclick="setAccentPreset('violet')" class="accent-btn" data-preset="violet" style="background:linear-gradient(135deg,#7c3aed,#a855f7)" title="Violet"></button>
+                                <button onclick="setAccentPreset('slate')" class="accent-btn" data-preset="slate" style="background:linear-gradient(135deg,#475569,#64748b)" title="Slate"></button>
                             </div>
                         </div>
                     </div>
