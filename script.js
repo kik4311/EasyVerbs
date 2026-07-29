@@ -2789,6 +2789,133 @@ function renderActivityGraph() {
     container.innerHTML = html;
 }
 
+// ================= СТАТИСТИКА =================
+function renderStats() {
+    renderStatsOverview();
+    renderStatsActivity();
+    renderStatsTopMistakes();
+    renderStatsGroups();
+    renderStatsAccuracy();
+}
+
+function renderStatsOverview() {
+    const container = document.querySelector('#view-stats .stats-cards');
+    if (!container) return;
+    const totalQ = settings.totalQuestions || 0;
+    const correct = settings.totalCorrect || 0;
+    const accuracy = totalQ > 0 ? Math.round((correct / totalQ) * 100) : 0;
+    const cards = [
+        { label: __('statsSessions'), value: settings.sessionsCompleted || 0, icon: 'fa-session', color: 'text-blue-500' },
+        { label: __('statsQuestions'), value: totalQ, icon: 'fa-question-circle', color: 'text-indigo-500' },
+        { label: __('statsAccuracy'), value: accuracy + '%', icon: 'fa-bullseye', color: accuracy >= 80 ? 'text-emerald-500' : accuracy >= 50 ? 'text-amber-500' : 'text-red-500' },
+        { label: __('statsBestStreak'), value: (settings.bestStreak || 0) + ' ✅', icon: 'fa-fire', color: 'text-orange-500' },
+    ];
+    container.innerHTML = cards.map(c => `
+        <div class="bg-slate-50 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold ${c.color}">${c.value}</div>
+            <div class="text-xs text-slate-400 mt-1">${c.label}</div>
+        </div>
+    `).join('');
+}
+
+function renderStatsActivity() {
+    const container = document.getElementById('stats-activity-graph');
+    if (!container) return;
+    const days = getActivityDays();
+    if (days.length === 0) {
+        container.innerHTML = '<p class="text-sm text-slate-400 text-center w-full">' + __('noActivity') + '</p>';
+        return;
+    }
+    const maxTotal = Math.max(...days.map(d => settings.activityLog[d].total));
+    let html = '<div class="flex items-end gap-1 justify-center w-full" style="height:100px">';
+    days.forEach(function(day) {
+        const data = settings.activityLog[day];
+        const pct = maxTotal > 0 ? Math.round((data.total / maxTotal) * 100) : 0;
+        const h = Math.max(4, pct);
+        html += `<div class="flex flex-col items-center gap-0.5 flex-1 max-w-[14px]" title="${day}: ${data.sessions} ${__('trOf')} ${data.total}">`;
+        html += `<div class="w-full rounded-t bg-indigo-400" style="height:${h}%"></div>`;
+        html += `<div class="text-[7px] text-slate-400">${day.slice(8)}</div>`;
+        html += `</div>`;
+    });
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function renderStatsTopMistakes() {
+    const container = document.getElementById('stats-top-mistakes');
+    if (!container) return;
+    const stats = getMistakeStats();
+    if (!stats || stats.topMistakes.length === 0) {
+        container.innerHTML = '<p class="text-slate-400 text-sm">' + __('statsNoMistakes') + '</p>';
+        return;
+    }
+    const maxM = stats.topMistakes[0].mistakes;
+    const top = stats.topMistakes.slice(0, 10);
+    container.innerHTML = top.map(function(v) {
+        const pct = Math.round((v.mistakes / maxM) * 100);
+        return `
+            <div class="flex items-center gap-2">
+                <span class="font-mono text-slate-500 w-5 text-right text-xs">${v.mistakes}</span>
+                <div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden">
+                    <div class="h-full rounded-full bg-amber-400" style="width:${pct}%"></div>
+                </div>
+                <span class="text-slate-700 text-sm w-20 truncate text-right font-medium">${v.verb.v1}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderStatsGroups() {
+    const container = document.getElementById('stats-groups');
+    if (!container) return;
+    const groups = [
+        { id: '1', label: 'AAA' },
+        { id: '2', label: 'ABB' },
+        { id: '3', label: 'ABA' },
+        { id: '4', label: 'ABC' },
+    ];
+    const totalVerbs = verbsData.length;
+    const learned = settings.verbsLearned || [];
+    container.innerHTML = groups.map(function(g) {
+        const groupVerbs = verbsData.filter(v => v.complexity == g.id).length;
+        const groupLearned = verbsData.filter(v => v.complexity == g.id && learned.includes(v.v1)).length;
+        const pct = groupVerbs > 0 ? Math.round((groupLearned / groupVerbs) * 100) : 0;
+        return `
+            <div>
+                <div class="flex justify-between text-sm mb-1">
+                    <span class="font-semibold text-slate-700">${g.label}</span>
+                    <span class="text-slate-400">${groupLearned}/${groupVerbs}</span>
+                </div>
+                <div class="bg-slate-100 rounded-full h-3 overflow-hidden">
+                    <div class="h-full rounded-full bg-purple-400 transition-all" style="width:${pct}%"></div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderStatsAccuracy() {
+    const container = document.getElementById('stats-accuracy-graph');
+    if (!container) return;
+    const days = getActivityDays();
+    if (days.length === 0) {
+        container.innerHTML = '<p class="text-sm text-slate-400 text-center">' + __('noActivity') + '</p>';
+        return;
+    }
+    const w = days.length;
+    let html = '<div class="flex items-end gap-1 justify-center" style="height:80px">';
+    days.forEach(function(day) {
+        const data = settings.activityLog[day];
+        const accuracy = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+        const color = accuracy >= 80 ? 'bg-emerald-400' : accuracy >= 50 ? 'bg-amber-400' : 'bg-red-400';
+        html += `<div class="flex flex-col items-center gap-0.5" style="width:calc(100%/${w})" title="${day}: ${accuracy}%">`;
+        html += `<div class="w-3 sm:w-4 rounded-t ${color}" style="height:${Math.max(4, accuracy)}%"></div>`;
+        html += `</div>`;
+    });
+    html += '</div>';
+    container.innerHTML = html;
+}
+
 // ================= ЗВУКИ =================
 function playSound(type) {
     if (!settings.soundEnabled) return;
@@ -2873,10 +3000,10 @@ document.addEventListener('keydown', function(event) {
     } else {
         konamiIdx = 0;
     }
-    // Tab shortcuts 1-8
+    // Tab shortcuts 1-9
     const num = parseInt(event.key);
-    if (num >= 1 && num <= 8) {
-        const tabs = ['dictionary', 'flashcards', 'letters', 'trainer', 'mistakes', 'speed', 'updates', 'about'];
+    if (num >= 1 && num <= 9) {
+        const tabs = ['dictionary', 'flashcards', 'letters', 'trainer', 'mistakes', 'speed', 'stats', 'updates', 'about'];
         switchTab(tabs[num - 1]);
         return;
     }
@@ -3223,6 +3350,8 @@ switchTab = function(tabId) {
         openMistakesTab();
     } else if (tabId === 'speed') {
         resetSpeedRun();
+    } else if (tabId === 'stats') {
+        renderStats();
     }
 };
 
