@@ -1,4 +1,4 @@
-// Irregular Verbs Trainer
+// EasyVerbs
 // Copyright (C) 2026 Manankik43
 // This program is free software under GPL v3 - see LICENSE
 
@@ -331,7 +331,7 @@ function setTrainerGroup(group) {
 }
 
 function printDictionary() {
-    let html = '<html><head><meta charset="UTF-8"><title>Irregular Verbs Dictionary</title>';
+    let html = '<html><head><meta charset="UTF-8"><title>EasyVerbs Dictionary</title>';
     html += '<style>body{font-family:Inter,sans-serif;padding:40px;color:#0f172a}';
     html += 'h1{font-size:24px;margin-bottom:8px;color:#4f46e5}';
     html += 'p.sub{font-size:12px;color:#94a3b8;margin-bottom:24px}';
@@ -342,7 +342,7 @@ function printDictionary() {
     html += '.v1{font-weight:700;color:#4f46e5}.group{font-size:10px;color:#94a3b8;margin-left:4px}';
     html += '@media print{body{padding:20px}}';
     html += '</style></head><body>';
-    html += '<h1>Irregular Verbs — Dictionary</h1>';
+    html += '<h1>EasyVerbs — Dictionary</h1>';
     html += '<p class="sub">' + getFullVerbList().length + ' verbs · ' + new Date().toLocaleDateString() + '</p>';
     html += '<table><thead><tr><th>V1 (Infinitive)</th><th>V2 (Past Simple)</th><th>V3 (Past Participle)</th><th>Translation</th></tr></thead><tbody>';
     const groupLabels = ['', 'AAA', 'ABB', 'ABA', 'ABC'];

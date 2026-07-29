@@ -1,6 +1,6 @@
 <img width="512" height="512" alt="изображение" src="https://github.com/user-attachments/assets/f3cb8a2d-97eb-428b-bafb-f10cd75d0b46" />
 
-# Irregular Verbs Trainer
+# EasyVerbs
 
 Тренажёр неправильных английских глаголов. Vanilla JS, один HTML-файл, без фреймворков.
 

@@ -1,6 +1,6 @@
 {
-  "name": "Irregular Verbs Trainer",
-  "short_name": "Irregular Verbs",
+  "name": "EasyVerbs",
+  "short_name": "EasyVerbs",
   "description": "Тренажёр неправильных английских глаголов",
   "start_url": ".",
   "display": "standalone",

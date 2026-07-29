@@ -1,4 +1,4 @@
-﻿// Irregular Verbs Trainer
+﻿// EasyVerbs
 // Copyright (C) 2026 Manankik43
 // This program is free software under GPL v3 - see LICENSE
 
@@ -202,8 +202,8 @@ const translations = {
         setReset: 'Сброс прогресса',
         setResetDesc: 'Очистить статистику и вернуть настройки по умолчанию',
         setResetConfirm: 'Вы уверены? Весь прогресс и настройки будут сброшены.',
-        welcomeTitle: 'Irregular Verbs',
-        welcomeSubtitle: 'Тренажер неправильных глаголов',
+        welcomeTitle: 'EasyVerbs',
+        welcomeSubtitle: 'Тренажёр английских глаголов',
         welcomeDesc: 'Освойте все формы неправильных глаголов с помощью интерактивных тренировок:',
         welcomeDict: 'Словарь',
         welcomeDictDesc: '100+ глаголов',
@@ -286,7 +286,7 @@ const translations = {
         footerBeta: 'Бета-версия. Возможны частые обновления.',
         footerAuthor: 'Manankik43',
         aboutTitle: 'О сайте',
-        aboutDesc: 'Тренажёр неправильных английских глаголов. Помогает запоминать формы V1, V2 и V3 через карточки, тренировки и работу над ошибками.',
+        aboutDesc: 'EasyVerbs — тренажёр английских глаголов. Помогает запоминать формы V1, V2 и V3 через карточки, тренировки и работу над ошибками.',
         aboutTech: 'Сделано на HTML, CSS и чистом JS',
         navSpeed: 'Спринт',
         navPrepositions: 'Предлоги',
@@ -402,7 +402,7 @@ const translations = {
         fcTitle: 'Flashcards',
         fcUnavailTitle: 'Temporarily Unavailable',
         aboutTitle: 'About',
-        aboutDesc: 'Irregular English verb trainer. Helps memorize V1, V2 and V3 forms through flashcards, drills and error review.',
+        aboutDesc: 'EasyVerbs — English verb trainer. Helps memorize V1, V2 and V3 forms through flashcards, drills and error review.',
         aboutTech: 'Built with HTML, CSS and vanilla JS',
         fcUnavailDesc: 'Flashcards are temporarily disabled. Use other training modes.',
         fcAll: 'All Verbs',
@@ -577,9 +577,9 @@ const translations = {
         setWelcomeDesc: 'Show the welcome screen again',
         setReset: 'Reset Progress',
         setResetDesc: 'Clear statistics and restore default settings',
-        welcomeTitle: 'Irregular Verbs',
-        welcomeSubtitle: 'Irregular Verbs Trainer',
-        welcomeDesc: 'Master all forms of irregular verbs with interactive exercises:',
+        welcomeTitle: 'EasyVerbs',
+        welcomeSubtitle: 'EasyVerbs',
+        welcomeDesc: 'Master English verbs with interactive exercises:',
         welcomeDict: 'Dictionary',
         welcomeDictDesc: '100+ verbs',
         welcomeCards: 'Flashcards',
