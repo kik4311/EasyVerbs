@@ -49,4 +49,4 @@ cd EasyVerbs
 
 ## Авторы
 
-- [Manankik43](https://github.com/kik4311)
+- [kik4311](https://github.com/kik4311)
