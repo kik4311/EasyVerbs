@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://kik4311.github.io/EasyVerbs/">Открыть приложение →</a>
+  <a href="https://kik4311.github.io/EasyVerbs/">Открыть сайт →</a>
 </p>
 
 ## Функции
