@@ -44,7 +44,7 @@
                     <span class="font-bold text-sm sm:text-base tracking-tight hidden sm:block">EasyVerbs</span>
                     <span onclick="showBetaInfo()" class="text-[10px] font-bold text-yellow-300 bg-yellow-300/20 px-1.5 py-0.5 rounded-md leading-none cursor-pointer hover:bg-yellow-300/30 transition-colors shrink-0">BETA</span>
                 </div>
-                <div class="flex gap-px sm:gap-1 text-xs overflow-x-auto no-scrollbar">
+                <div class="flex gap-px sm:gap-1 text-xs overflow-x-auto no-scrollbar nav-tabs">
                     <button onclick="switchTab('dictionary')" id="tab-dictionary" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Словарь" role="tab" aria-selected="true" aria-controls="view-dictionary">
                         <i class="fas fa-book"></i> <span class="nav-label" data-i18n="navDictionary">Словарь</span>
                         <span class="nav-progress-bar"><span class="nav-progress-fill" id="nav-prog-dictionary" style="width:0%"></span></span>
@@ -73,6 +73,8 @@
                     <button onclick="switchTab('about')" id="tab-about" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="О сайте" role="tab" aria-selected="false" aria-controls="view-about">
                         <i class="fas fa-info-circle"></i> <span class="nav-label" data-i18n="navAbout">О сайте</span>
                     </button>
+                </div>
+                <div class="flex gap-px sm:gap-1 text-xs shrink-0">
                     <button onclick="openSettings()" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" title="Настройки" aria-label="Настройки">
                         <i class="fas fa-cog"></i>
                     </button>
