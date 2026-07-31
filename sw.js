@@ -10,6 +10,7 @@ const URLS = [
   'script.js',
   'translations.js',
   'manifest.json',
+  'logo.svg',
   'logo.png'
 ];
 
