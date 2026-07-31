@@ -44,36 +44,6 @@
                     <span class="font-bold text-sm sm:text-base tracking-tight hidden sm:block">EasyVerbs</span>
                     <span onclick="showBetaInfo()" class="text-[10px] font-bold text-yellow-300 bg-yellow-300/20 px-1.5 py-0.5 rounded-md leading-none cursor-pointer hover:bg-yellow-300/30 transition-colors shrink-0">BETA</span>
                 </div>
-                <div class="flex gap-px sm:gap-1 text-xs overflow-x-auto no-scrollbar nav-tabs">
-                    <button onclick="switchTab('dictionary')" id="tab-dictionary" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Словарь" role="tab" aria-selected="true" aria-controls="view-dictionary">
-                        <i class="fas fa-book"></i> <span class="nav-label" data-i18n="navDictionary">Словарь</span>
-                        <span class="nav-progress-bar"><span class="nav-progress-fill" id="nav-prog-dictionary" style="width:0%"></span></span>
-                    </button>
-                    <button onclick="switchTab('flashcards')" id="tab-flashcards" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Карточки" role="tab" aria-selected="false" aria-controls="view-flashcards">
-                        <i class="fas fa-clone"></i> <span class="nav-label" data-i18n="navFlashcards">Карточки</span>
-                    </button>
-                    <button onclick="switchTab('letters')" id="tab-letters" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Буквы" role="tab" aria-selected="false" aria-controls="view-letters">
-                        <i class="fas fa-font"></i> <span class="nav-label" data-i18n="navLetters">Буквы</span>
-                    </button>
-                    <button onclick="switchTab('trainer')" id="tab-trainer" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Формы" role="tab" aria-selected="false" aria-controls="view-trainer">
-                        <i class="fas fa-dumbbell"></i> <span class="nav-label" data-i18n="navTrainer">Формы</span>
-                    </button>
-                    <button onclick="switchTab('mistakes')" id="tab-mistakes" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Ошибки" role="tab" aria-selected="false" aria-controls="view-mistakes">
-                        <i class="fas fa-tasks"></i> <span class="nav-label" data-i18n="navMistakes">Ошибки</span>
-                    </button>
-                    <button onclick="switchTab('speed')" id="tab-speed" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Спринт" role="tab" aria-selected="false" aria-controls="view-speed">
-                        <i class="fas fa-bolt"></i> <span class="nav-label" data-i18n="navSpeed">Спринт</span>
-                    </button>
-                    <button onclick="switchTab('stats')" id="tab-stats" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Статистика" role="tab" aria-selected="false" aria-controls="view-stats">
-                        <i class="fas fa-chart-bar"></i> <span class="nav-label" data-i18n="navStats">Статистика</span>
-                    </button>
-                    <button onclick="switchTab('prepositions')" id="tab-prepositions" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Предлоги" role="tab" aria-selected="false" aria-controls="view-prepositions">
-                        <i class="fas fa-link"></i> <span class="nav-label" data-i18n="navPrepositions">Предлоги</span>
-                    </button>
-                    <button onclick="switchTab('about')" id="tab-about" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="О сайте" role="tab" aria-selected="false" aria-controls="view-about">
-                        <i class="fas fa-info-circle"></i> <span class="nav-label" data-i18n="navAbout">О сайте</span>
-                    </button>
-                </div>
                 <div class="flex gap-px sm:gap-1 text-xs shrink-0">
                     <button onclick="openSettings()" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" title="Настройки" aria-label="Настройки">
                         <i class="fas fa-cog"></i>
@@ -82,6 +52,36 @@
                         <i class="fas fa-download"></i>
                     </button>
                 </div>
+            </div>
+            <div class="flex gap-px sm:gap-1 text-xs flex-wrap pb-2 pt-1 sm:pt-0">
+                <button onclick="switchTab('dictionary')" id="tab-dictionary" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Словарь" role="tab" aria-selected="true" aria-controls="view-dictionary">
+                    <i class="fas fa-book"></i> <span class="nav-label" data-i18n="navDictionary">Словарь</span>
+                    <span class="nav-progress-bar"><span class="nav-progress-fill" id="nav-prog-dictionary" style="width:0%"></span></span>
+                </button>
+                <button onclick="switchTab('flashcards')" id="tab-flashcards" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Карточки" role="tab" aria-selected="false" aria-controls="view-flashcards">
+                    <i class="fas fa-clone"></i> <span class="nav-label" data-i18n="navFlashcards">Карточки</span>
+                </button>
+                <button onclick="switchTab('letters')" id="tab-letters" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Буквы" role="tab" aria-selected="false" aria-controls="view-letters">
+                    <i class="fas fa-font"></i> <span class="nav-label" data-i18n="navLetters">Буквы</span>
+                </button>
+                <button onclick="switchTab('trainer')" id="tab-trainer" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Формы" role="tab" aria-selected="false" aria-controls="view-trainer">
+                    <i class="fas fa-dumbbell"></i> <span class="nav-label" data-i18n="navTrainer">Формы</span>
+                </button>
+                <button onclick="switchTab('mistakes')" id="tab-mistakes" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Ошибки" role="tab" aria-selected="false" aria-controls="view-mistakes">
+                    <i class="fas fa-tasks"></i> <span class="nav-label" data-i18n="navMistakes">Ошибки</span>
+                </button>
+                <button onclick="switchTab('speed')" id="tab-speed" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Спринт" role="tab" aria-selected="false" aria-controls="view-speed">
+                    <i class="fas fa-bolt"></i> <span class="nav-label" data-i18n="navSpeed">Спринт</span>
+                </button>
+                <button onclick="switchTab('stats')" id="tab-stats" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Статистика" role="tab" aria-selected="false" aria-controls="view-stats">
+                    <i class="fas fa-chart-bar"></i> <span class="nav-label" data-i18n="navStats">Статистика</span>
+                </button>
+                <button onclick="switchTab('prepositions')" id="tab-prepositions" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="Предлоги" role="tab" aria-selected="false" aria-controls="view-prepositions">
+                    <i class="fas fa-link"></i> <span class="nav-label" data-i18n="navPrepositions">Предлоги</span>
+                </button>
+                <button onclick="switchTab('about')" id="tab-about" class="nav-btn px-1.5 sm:px-2.5 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-white/15" data-title="О сайте" role="tab" aria-selected="false" aria-controls="view-about">
+                    <i class="fas fa-info-circle"></i> <span class="nav-label" data-i18n="navAbout">О сайте</span>
+                </button>
             </div>
         </div>
     </nav>

@@ -220,7 +220,7 @@ body.dark .nav-btn.active {
 .nav-label {
     display: none;
 }
-@media (min-width: 1024px) {
+@media (min-width: 640px) {
     .nav-label { display: inline; }
 }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
