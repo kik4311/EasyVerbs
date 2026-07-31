@@ -45,12 +45,12 @@
     --blob-2: rgba(6,182,212,0.16);
     --blob-3: rgba(97,76,211,0.14);
     --blob-4: rgba(79,70,229,0.12);
-    --glass-card: rgba(255,255,255,0.55);
-    --glass-card-strong: rgba(255,255,255,0.72);
-    --glass-elevated: rgba(255,255,255,0.32);
-    --glass-elevated-2: rgba(255,255,255,0.5);
-    --glass-border: rgba(255,255,255,0.6);
-    --glass-border-soft: rgba(255,255,255,0.35);
+    --glass-card: rgba(255,255,255,0.62);
+    --glass-card-strong: rgba(255,255,255,0.78);
+    --glass-elevated: rgba(255,255,255,0.45);
+    --glass-elevated-2: rgba(255,255,255,0.62);
+    --glass-border: rgba(255,255,255,0.7);
+    --glass-border-soft: rgba(255,255,255,0.4);
     --glass-blur: blur(20px) saturate(150%);
     --glass-blur-sm: blur(12px) saturate(140%);
 }
@@ -407,7 +407,7 @@ button, .fc-group-btn {
 
 .bg-white.text-indigo-600.hover\:bg-indigo-50 {
     background: var(--glass-elevated-2) !important;
-    border: 1px solid var(--glass-border-soft) !important;
+    border: 1px solid var(--border-color) !important;
     color: var(--primary) !important;
     box-shadow: var(--shadow-sm) !important;
     backdrop-filter: var(--glass-blur-sm);
@@ -514,7 +514,7 @@ input[type="text"]:not(.letter-input) {
     border-radius: var(--radius-md) !important;
     transition: all 0.25s ease !important;
     background: var(--glass-elevated) !important;
-    border: 2px solid var(--glass-border-soft) !important;
+    border: 2px solid var(--border-color) !important;
     color: var(--text-primary) !important;
     font-family: 'Inter', sans-serif;
 }
@@ -530,7 +530,7 @@ input[type="text"]:not(.letter-input)::placeholder {
 
 #searchInput {
     background: var(--glass-elevated) !important;
-    border: 2px solid var(--glass-border-soft) !important;
+    border: 2px solid var(--border-color) !important;
     border-radius: var(--radius-lg) !important;
     font-family: 'Inter', sans-serif;
 }
@@ -626,9 +626,10 @@ table.w-full .text-slate-600 { color: var(--text-secondary) !important; }
     font-family: 'Inter', sans-serif;
 }
 .fc-group-btn.bg-white {
-    background: var(--glass-elevated) !important;
+    background: var(--glass-elevated-2) !important;
     color: var(--text-secondary) !important;
-    border: 1px solid var(--glass-border-soft) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-sm);
     backdrop-filter: var(--glass-blur-sm);
     -webkit-backdrop-filter: var(--glass-blur-sm);
 }
@@ -644,8 +645,8 @@ table.w-full .text-slate-600 { color: var(--text-secondary) !important; }
 /* ===================== ВИКТОРИНА (ОШИБКИ) ===================== */
 #mistakes-quiz-options button {
     border-radius: var(--radius-md) !important;
-    border: 2px solid var(--glass-border-soft) !important;
-    background: var(--glass-elevated) !important;
+    border: 2px solid var(--border-color) !important;
+    background: var(--glass-elevated-2) !important;
     color: var(--text-primary) !important;
     backdrop-filter: var(--glass-blur-sm);
     -webkit-backdrop-filter: var(--glass-blur-sm);
@@ -724,7 +725,7 @@ body.dark .tts-btn {
 }
 #letters-verb-card .bg-white,
 #mistakes-letters-verb-card .bg-white {
-    background: var(--glass-elevated) !important;
+    background: var(--glass-elevated-2) !important;
 }
 body.dark #letters-verb-card,
 body.dark #mistakes-letters-verb-card {
@@ -802,8 +803,8 @@ body.dark .bg-red-100.text-red-800 {
 .border-purple-600 { border-color: var(--primary-light) !important; }
 
 .w-12.h-14.bg-slate-100 {
-    background: var(--glass-elevated) !important;
-    border: 1px solid var(--glass-border-soft) !important;
+    background: var(--glass-elevated-2) !important;
+    border: 1px solid var(--border-color) !important;
     color: var(--text-primary) !important;
     border-radius: var(--radius-md) !important;
     box-shadow: var(--shadow-sm) !important;
@@ -954,17 +955,17 @@ body.dark #settings-modal [id^="stab-"] { color: var(--text-secondary) !importan
 .settings-tab-btn i { font-size: 0.8rem; }
 .settings-tab-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.5); }
 .settings-tab-btn.active {
-    background: var(--glass-elevated-2) !important;
+    background: var(--bg-card) !important;
     color: var(--primary) !important;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 body.dark .settings-tab-btn.active {
     box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
 
 .settings-card {
-    background: var(--glass-elevated);
-    border: 1px solid var(--glass-border-soft);
+    background: var(--glass-elevated-2);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     margin-bottom: 0.75rem;
     overflow: hidden;
@@ -981,7 +982,7 @@ body.dark .settings-tab-btn.active {
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--text-tertiary);
-    border-bottom: 1px solid var(--glass-border-soft);
+    border-bottom: 1px solid var(--border-color);
     background: var(--glass-elevated-2);
 }
 .settings-card-header i { font-size: 0.7rem; color: var(--primary); }
@@ -1053,9 +1054,9 @@ body.dark .settings-card-danger {
     width: 5.5rem;
     padding: 0.35rem 0.5rem;
     font-size: 0.8rem;
-    border: 1.5px solid var(--glass-border-soft);
+    border: 1.5px solid var(--border-color);
     border-radius: var(--radius-sm);
-    background: var(--glass-elevated);
+    background: var(--glass-elevated-2);
     color: var(--text-primary);
     outline: none;
     font-family: 'Inter', sans-serif;
@@ -1089,13 +1090,13 @@ body.dark .settings-card-danger {
 .btn-export {
     background: var(--glass-elevated-2);
     color: var(--primary);
-    border: 1.5px solid var(--glass-border-soft);
+    border: 1.5px solid var(--border-color);
 }
 .btn-export:hover { border-color: var(--primary-light); background: var(--primary-bg); transform: translateY(-1px); }
 .btn-outline {
     background: var(--glass-elevated-2);
     color: var(--primary);
-    border: 1.5px solid var(--glass-border-soft);
+    border: 1.5px solid var(--border-color);
 }
 .btn-outline:hover { border-color: var(--primary-light); background: var(--primary-bg); transform: translateY(-1px); }
 .btn-danger {
@@ -1121,14 +1122,15 @@ body.dark .settings-card-danger {
 select {
     background: var(--glass-elevated-2) !important;
     color: var(--text-primary) !important;
-    border: 1.5px solid var(--glass-border-soft) !important;
+    border: 1.5px solid var(--border-color) !important;
     border-radius: var(--radius-sm) !important;
     padding: 0.4rem 0.6rem !important;
     font-size: 0.8rem !important;
     font-family: 'Inter', sans-serif;
     cursor: pointer;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
+    box-shadow: var(--shadow-sm);
 }
 select:focus { border-color: var(--primary) !important; box-shadow: 0 0 0 3px var(--primary-bg) !important; }
 body.dark select option { background: var(--bg-card); color: var(--text-primary); }
@@ -1232,11 +1234,19 @@ body.dark .egg-toast {
 .trainer-group-btn,
 .tr-mode-btn,
 .dict-group-btn {
-    background: var(--glass-elevated) !important;
+    background: var(--glass-elevated-2) !important;
     color: var(--text-secondary) !important;
-    border-color: var(--glass-border-soft) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: var(--shadow-sm);
     backdrop-filter: var(--glass-blur-sm);
     -webkit-backdrop-filter: var(--glass-blur-sm);
+}
+.trainer-group-btn:hover,
+.tr-mode-btn:hover,
+.dict-group-btn:hover {
+    background: var(--primary-bg) !important;
+    border-color: var(--primary-light) !important;
+    color: var(--primary) !important;
 }
 
 .bg-white.rounded-xl.p-6,
@@ -1245,14 +1255,14 @@ body.dark .egg-toast {
 .bg-white.rounded-lg.p-3,
 .bg-white.rounded-lg.p-4 {
     background: var(--glass-elevated-2) !important;
-    border-color: var(--glass-border-soft) !important;
+    border-color: var(--border-color) !important;
     backdrop-filter: var(--glass-blur-sm);
     -webkit-backdrop-filter: var(--glass-blur-sm);
 }
 
 .bg-white.border-2.border-dashed {
     background: var(--glass-elevated) !important;
-    border-color: var(--glass-border) !important;
+    border-color: var(--border-color) !important;
     backdrop-filter: var(--glass-blur-sm);
     -webkit-backdrop-filter: var(--glass-blur-sm);
 }
@@ -1261,8 +1271,8 @@ body.dark .egg-toast {
 .bg-slate-50.rounded-xl.p-4,
 .bg-slate-50.rounded-xl,
 .hidden.mb-6.p-6.bg-slate-50 {
-    background: var(--glass-elevated) !important;
-    border-color: var(--glass-border-soft) !important;
+    background: var(--glass-elevated-2) !important;
+    border-color: var(--border-color) !important;
     backdrop-filter: var(--glass-blur-sm);
     -webkit-backdrop-filter: var(--glass-blur-sm);
 }
