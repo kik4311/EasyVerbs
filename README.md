@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="120" height="120" src="https://github.com/user-attachments/assets/f3cb8a2d-97eb-428b-bafb-f10cd75d0b46" alt="EasyVerbs logo">
+  <img width="120" height="120" src="https://raw.githubusercontent.com/kik4311/EasyVerbs/main/logo.svg" alt="EasyVerbs logo">
 </p>
 
 <h1 align="center">EasyVerbs</h1>
