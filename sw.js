@@ -1,5 +1,5 @@
 // EasyVerbs
-// Copyright (C) 2026 Manankik43
+// Copyright (C) 2026 kik4311
 // This program is free software under GPL v3 - see LICENSE
 
 const CACHE = 'easyverbs-v0.5.3';
