@@ -1,5 +1,5 @@
 // EasyVerbs
-// Copyright (C) 2026 Manankik43
+// Copyright (C) 2026 kik4311
 // This program is free software under GPL v3 - see LICENSE
 
 // База данных неправильных глаголов
@@ -108,6 +108,479 @@ const verbsData = [
     { v1: "write", v2: "wrote", v3: "written", translation: "писать", complexity: 1 }
 ];
 
+const verbTranslations = {
+    es: {
+        be: 'ser, estar',
+        bear: 'soportar, aguantar',
+        beat: 'golpear, vencer',
+        become: 'convertirse en',
+        begin: 'empezar',
+        bite: 'morder',
+        blow: 'soplar',
+        break: 'romper',
+        bring: 'traer',
+        build: 'construir',
+        burn: 'quemar(se)',
+        burst: 'explotar, reventar',
+        buy: 'comprar',
+        can: 'poder; saber',
+        catch: 'atrapar',
+        choose: 'elegir',
+        come: 'venir',
+        cost: 'costar',
+        cut: 'cortar',
+        deal: 'tratar, tener que ver',
+        dig: 'cavar',
+        do: 'hacer',
+        draw: 'dibujar',
+        dream: 'soñar',
+        drink: 'beber',
+        drive: 'conducir',
+        eat: 'comer',
+        fall: 'caer',
+        feed: 'alimentar',
+        feel: 'sentir',
+        fight: 'pelear; luchar',
+        find: 'encontrar',
+        fly: 'volar',
+        forbid: 'prohibir',
+        forget: 'olvidar',
+        forgive: 'perdonar',
+        freeze: 'congelar(se)',
+        get: 'obtener',
+        give: 'dar',
+        go: 'ir',
+        grow: 'crecer',
+        have: 'tener',
+        hear: 'oír',
+        hide: 'esconder(se)',
+        hit: 'golpear',
+        hold: 'sostener',
+        hurt: 'lastimar, hacer daño',
+        keep: 'guardar',
+        know: 'saber, conocer',
+        lead: 'conducir, guiar',
+        learn: 'aprender',
+        leave: 'dejar, salir de',
+        lend: 'prestar',
+        let: 'permitir',
+        light: 'encender',
+        lose: 'perder',
+        make: 'hacer',
+        mean: 'significar',
+        meet: 'encontrarse con',
+        pay: 'pagar',
+        put: 'poner',
+        read: 'leer',
+        ride: 'montar (a caballo)',
+        ring: 'sonar, llamar',
+        rise: 'subir, elevarse',
+        run: 'correr',
+        say: 'decir',
+        see: 'ver',
+        sell: 'vender',
+        send: 'enviar',
+        set: 'fijar, establecer',
+        sew: 'coser',
+        shake: 'sacudir',
+        shine: 'brillar',
+        shoot: 'disparar',
+        show: 'mostrar',
+        shut: 'cerrar',
+        sing: 'cantar',
+        sit: 'sentarse',
+        sleep: 'dormir',
+        smell: 'oler, olfatear',
+        speak: 'hablar',
+        spell: 'deletrear',
+        spend: 'gastar',
+        stand: 'estar de pie',
+        steal: 'robar',
+        stick: 'pegar(se)',
+        sting: 'picar',
+        swear: 'jurar',
+        sweep: 'barrer',
+        swim: 'nadar',
+        take: 'tomar',
+        teach: 'enseñar',
+        tear: 'rasgar',
+        tell: 'contar, decir',
+        think: 'pensar',
+        throw: 'tirar, lanzar',
+        understand: 'entender',
+        wake: 'despertar(se)',
+        wear: 'llevar (ropa)',
+        win: 'ganar',
+        write: 'escribir',
+    },
+    de: {
+        be: 'sein',
+        bear: 'ertragen, aushalten',
+        beat: 'schlagen',
+        become: 'werden',
+        begin: 'beginnen',
+        bite: 'beißen',
+        blow: 'blasen',
+        break: 'brechen',
+        bring: 'bringen',
+        build: 'bauen',
+        burn: 'brennen',
+        burst: 'platzen, bersten',
+        buy: 'kaufen',
+        can: 'können',
+        catch: 'fangen',
+        choose: 'wählen',
+        come: 'kommen',
+        cost: 'kosten',
+        cut: 'schneiden',
+        deal: 'zu tun haben mit',
+        dig: 'graben',
+        do: 'machen, tun',
+        draw: 'zeichnen',
+        dream: 'träumen',
+        drink: 'trinken',
+        drive: 'fahren',
+        eat: 'essen',
+        fall: 'fallen',
+        feed: 'füttern',
+        feel: 'fühlen',
+        fight: 'kämpfen',
+        find: 'finden',
+        fly: 'fliegen',
+        forbid: 'verbieten',
+        forget: 'vergessen',
+        forgive: 'vergeben',
+        freeze: 'einfrieren',
+        get: 'bekommen',
+        give: 'geben',
+        go: 'gehen',
+        grow: 'wachsen',
+        have: 'haben',
+        hear: 'hören',
+        hide: 'verstecken (sich)',
+        hit: 'schlagen, treffen',
+        hold: 'halten',
+        hurt: 'verletzen, wehtun',
+        keep: 'behalten, aufbewahren',
+        know: 'wissen, kennen',
+        lead: 'führen',
+        learn: 'lernen',
+        leave: 'verlassen',
+        lend: 'verleihen, leihen',
+        let: 'lassen, erlauben',
+        light: 'anzünden',
+        lose: 'verlieren',
+        make: 'machen',
+        mean: 'bedeuten',
+        meet: 'treffen',
+        pay: 'bezahlen',
+        put: 'legen, stellen',
+        read: 'lesen',
+        ride: 'reiten',
+        ring: 'klingeln, läuten',
+        rise: 'steigen, aufgehen',
+        run: 'rennen, laufen',
+        say: 'sagen',
+        see: 'sehen',
+        sell: 'verkaufen',
+        send: 'senden, schicken',
+        set: 'setzen, festlegen',
+        sew: 'nähen',
+        shake: 'schütteln',
+        shine: 'scheinen',
+        shoot: 'schießen',
+        show: 'zeigen',
+        shut: 'schließen',
+        sing: 'singen',
+        sit: 'sitzen',
+        sleep: 'schlafen',
+        smell: 'riechen',
+        speak: 'sprechen',
+        spell: 'buchstabieren',
+        spend: 'ausgeben',
+        stand: 'stehen',
+        steal: 'stehlen',
+        stick: 'kleben, stecken',
+        sting: 'stechen',
+        swear: 'schwören',
+        sweep: 'fegen',
+        swim: 'schwimmen',
+        take: 'nehmen',
+        teach: 'lehren, unterrichten',
+        tear: 'reißen',
+        tell: 'erzählen, sagen',
+        think: 'denken',
+        throw: 'werfen',
+        understand: 'verstehen',
+        wake: 'aufwachen; wecken',
+        wear: 'tragen (Kleidung)',
+        win: 'gewinnen',
+        write: 'schreiben',
+    },
+    fr: {
+        be: 'être',
+        bear: 'supporter, endurer',
+        beat: 'battre',
+        become: 'devenir',
+        begin: 'commencer',
+        bite: 'mordre',
+        blow: 'souffler',
+        break: 'casser',
+        bring: 'apporter',
+        build: 'construire',
+        burn: 'brûler',
+        burst: 'éclater, exploser',
+        buy: 'acheter',
+        can: 'pouvoir; savoir',
+        catch: 'attraper',
+        choose: 'choisir',
+        come: 'venir',
+        cost: 'coûter',
+        cut: 'couper',
+        deal: 'avoir affaire à',
+        dig: 'creuser',
+        do: 'faire',
+        draw: 'dessiner',
+        dream: 'rêver',
+        drink: 'boire',
+        drive: 'conduire',
+        eat: 'manger',
+        fall: 'tomber',
+        feed: 'nourrir',
+        feel: 'sentir',
+        fight: 'se battre; lutter',
+        find: 'trouver',
+        fly: 'voler',
+        forbid: 'interdire',
+        forget: 'oublier',
+        forgive: 'pardonner',
+        freeze: 'geler',
+        get: 'obtenir',
+        give: 'donner',
+        go: 'aller',
+        grow: 'pousser, grandir',
+        have: 'avoir',
+        hear: 'entendre',
+        hide: 'cacher (se)',
+        hit: 'frapper',
+        hold: 'tenir',
+        hurt: 'blesser, faire mal',
+        keep: 'garder',
+        know: 'savoir, connaître',
+        lead: 'mener, diriger',
+        learn: 'apprendre',
+        leave: 'quitter, laisser',
+        lend: 'prêter',
+        let: 'permettre, laisser',
+        light: 'allumer',
+        lose: 'perdre',
+        make: 'faire',
+        mean: 'signifier',
+        meet: 'rencontrer',
+        pay: 'payer',
+        put: 'mettre, poser',
+        read: 'lire',
+        ride: 'monter (à cheval)',
+        ring: 'sonner',
+        rise: 'se lever, monter',
+        run: 'courir',
+        say: 'dire',
+        see: 'voir',
+        sell: 'vendre',
+        send: 'envoyer',
+        set: 'fixer, établir',
+        sew: 'coudre',
+        shake: 'secouer',
+        shine: 'briller',
+        shoot: 'tirer',
+        show: 'montrer',
+        shut: 'fermer',
+        sing: 'chanter',
+        sit: 's\'asseoir, être assis',
+        sleep: 'dormir',
+        smell: 'sentir, flairer',
+        speak: 'parler',
+        spell: 'épeler',
+        spend: 'dépenser',
+        stand: 'être debout',
+        steal: 'voler',
+        stick: 'coller (se)',
+        sting: 'piquer',
+        swear: 'jurer',
+        sweep: 'balayer',
+        swim: 'nager',
+        take: 'prendre',
+        teach: 'enseigner',
+        tear: 'déchirer',
+        tell: 'raconter, dire',
+        think: 'penser',
+        throw: 'jeter, lancer',
+        understand: 'comprendre',
+        wake: 'se réveiller; réveiller',
+        wear: 'porter (vêtement)',
+        win: 'gagner',
+        write: 'écrire',
+    },
+    pt: {
+        be: 'ser, estar',
+        bear: 'suportar, aguentar',
+        beat: 'bater, derrotar',
+        become: 'tornar-se',
+        begin: 'começar',
+        bite: 'morder',
+        blow: 'soprar',
+        break: 'quebrar',
+        bring: 'trazer',
+        build: 'construir',
+        burn: 'queimar(-se)',
+        burst: 'explodir, arrebentar',
+        buy: 'comprar',
+        can: 'poder; saber',
+        catch: 'pegar, capturar',
+        choose: 'escolher',
+        come: 'vir',
+        cost: 'custar',
+        cut: 'cortar',
+        deal: 'lidar com',
+        dig: 'cavar',
+        do: 'fazer',
+        draw: 'desenhar',
+        dream: 'sonhar',
+        drink: 'beber',
+        drive: 'dirigir',
+        eat: 'comer',
+        fall: 'cair',
+        feed: 'alimentar',
+        feel: 'sentir',
+        fight: 'lutar; brigar',
+        find: 'encontrar',
+        fly: 'voar',
+        forbid: 'proibir',
+        forget: 'esquecer',
+        forgive: 'perdoar',
+        freeze: 'congelar(-se)',
+        get: 'obter, conseguir',
+        give: 'dar',
+        go: 'ir',
+        grow: 'crescer',
+        have: 'ter',
+        hear: 'ouvir',
+        hide: 'esconder(-se)',
+        hit: 'bater, atingir',
+        hold: 'segurar',
+        hurt: 'machucar, ferir',
+        keep: 'guardar',
+        know: 'saber, conhecer',
+        lead: 'conduzir, liderar',
+        learn: 'aprender',
+        leave: 'deixar, partir de',
+        lend: 'emprestar',
+        let: 'permitir, deixar',
+        light: 'acender',
+        lose: 'perder',
+        make: 'fazer',
+        mean: 'significar',
+        meet: 'encontrar-se com',
+        pay: 'pagar',
+        put: 'colocar',
+        read: 'ler',
+        ride: 'andar (a cavalo)',
+        ring: 'tocar, soar',
+        rise: 'subir, elevar-se',
+        run: 'correr',
+        say: 'dizer',
+        see: 'ver',
+        sell: 'vender',
+        send: 'enviar',
+        set: 'definir, estabelecer',
+        sew: 'costurar',
+        shake: 'sacudir',
+        shine: 'brilhar',
+        shoot: 'atirar',
+        show: 'mostrar',
+        shut: 'fechar',
+        sing: 'cantar',
+        sit: 'sentar-se',
+        sleep: 'dormir',
+        smell: 'cheirar, sentir o cheiro',
+        speak: 'falar',
+        spell: 'soletrar',
+        spend: 'gastar',
+        stand: 'ficar em pé',
+        steal: 'roubar',
+        stick: 'colar(-se)',
+        sting: 'picar',
+        swear: 'jurar',
+        sweep: 'varrer',
+        swim: 'nadar',
+        take: 'pegar, levar',
+        teach: 'ensinar',
+        tear: 'rasgar',
+        tell: 'contar, dizer',
+        think: 'pensar',
+        throw: 'jogar, lançar',
+        understand: 'entender',
+        wake: 'acordar; despertar',
+        wear: 'usar (roupa)',
+        win: 'vencer, ganhar',
+        write: 'escrever',
+    }
+};
+
+function getVerbTranslation(verb) {
+    const lang = settings && settings.lang ? settings.lang : getSystemLang();
+    if (verbTranslations[lang] && verbTranslations[lang][verb.v1] !== undefined) {
+        return verbTranslations[lang][verb.v1];
+    }
+    return verb.translation;
+}
+
+function uiLocale() {
+    const map = { en: 'en-US', es: 'es-ES', de: 'de-DE', fr: 'fr-FR', pt: 'pt-PT', ru: 'ru-RU' };
+    return map[settings.lang] || map[getSystemLang()] || 'ru-RU';
+}
+
+function refreshLanguageUI() {
+    const dictBody = document.getElementById('dictionary-body');
+    if (dictBody && dictBody.children.length > 0) renderDictionary();
+
+    const fcView = document.getElementById('view-flashcards');
+    if (fcView && !fcView.classList.contains('hidden')) updateFlashcard();
+
+    const stats = getMistakeStats();
+    const statsDisplay = document.getElementById('error-stats-display');
+    const btnMistakes = document.getElementById('btn-mistakes');
+    if (statsDisplay) {
+        if (stats && stats.total > 0) {
+            statsDisplay.innerHTML = `${__('setMistakes')}: ${stats.total} ${__('setExportDesc')}`;
+            if (btnMistakes) btnMistakes.classList.remove('hidden');
+        } else {
+            statsDisplay.innerHTML = __('setMistakesDesc');
+            if (btnMistakes) btnMistakes.classList.add('hidden');
+        }
+    }
+
+    renderAchievements();
+    renderCustomVerbsList();
+    renderVerbOfDay();
+    renderSpeedLeaderboard();
+
+    const lettersActive = document.getElementById('letters-active');
+    if (lettersActive && !lettersActive.classList.contains('hidden')) renderLettersWord();
+
+    const trainerActive = document.getElementById('trainer-active');
+    if (trainerActive && !trainerActive.classList.contains('hidden')) loadTrainerQuestion();
+
+    const mistakesActive = document.getElementById('mistakes-active');
+    if (mistakesActive && !mistakesActive.classList.contains('hidden')) loadMistakesQuestion();
+
+    const prepActive = document.getElementById('prep-active');
+    if (prepActive && !prepActive.classList.contains('hidden')) loadPrepQuestion();
+
+    const speedActive = document.getElementById('speed-active');
+    if (speedActive && !speedActive.classList.contains('hidden')) loadSpeedQuestion();
+}
+
 // ================= НАСТРОЙКИ ПО УМОЛЧАНИЮ =================
 const defaultSettings = {
     questionCount: '10',
@@ -144,7 +617,11 @@ const defaultSettings = {
     speedHighScores: [],
     verbOfDayDate: '',
     verbOfDay: null,
-    accentPreset: 'indigo'
+    accentPreset: 'indigo',
+    smartOrder: true,
+    haptics: true,
+    lastActiveTab: null,
+    alignRight: false
 };
 
 let settings = loadSettings();
@@ -178,7 +655,7 @@ function loadSettings() {
         loaded = { ...defaultSettings };
     }
     loadErrorStats();
-    ['gradientFrom', 'gradientTo', 'showTranslation', 'autoAdvance', 'shuffle', 'compact', 'welcomeShown', 'lang', 'favOnly', 'favorites', 'customVerbs', 'achievements', 'sessionsCompleted', 'totalCorrect', 'totalQuestions', 'bestStreak', 'verbsLearned', 'showTimer', 'soundEnabled', 'useSpacedRep', 'verbLastSeen', 'speedHighScore', 'verbGroup', 'confidence', 'accentPreset'].forEach(k => {
+    ['gradientFrom', 'gradientTo', 'showTranslation', 'autoAdvance', 'shuffle', 'compact', 'welcomeShown', 'lang', 'favOnly', 'favorites', 'customVerbs', 'achievements', 'sessionsCompleted', 'totalCorrect', 'totalQuestions', 'bestStreak', 'verbsLearned', 'showTimer', 'soundEnabled', 'useSpacedRep', 'verbLastSeen', 'speedHighScore', 'verbGroup', 'confidence', 'accentPreset', 'smartOrder', 'haptics', 'lastActiveTab', 'alignRight'].forEach(k => {
         if (loaded[k] === undefined) loaded[k] = defaultSettings[k];
     });
     if (!hadSaved) {
@@ -220,8 +697,12 @@ function saveSettings() {
     settings.favOnly = document.getElementById('setting-fav-only')?.checked || false;
     settings.soundEnabled = document.getElementById('setting-sound')?.checked ?? true;
     settings.useSpacedRep = document.getElementById('setting-spaced-rep')?.checked ?? false;
+    settings.smartOrder = document.getElementById('setting-smart-order')?.checked ?? true;
+    settings.haptics = document.getElementById('setting-haptics')?.checked ?? true;
+    settings.alignRight = document.getElementById('setting-align-right')?.checked ?? false;
     settings.verbGroup = document.getElementById('setting-verb-group')?.value || 'all';
     applyCompactMode();
+    applyWelcomeAlign();
     localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
 }
 
@@ -247,12 +728,191 @@ function switchTab(tabId) {
     targetBtn.classList.add('active');
     targetBtn.setAttribute('aria-selected', 'true');
 
+    const navRow = document.querySelector('.nav-tabs-row');
+    if (navRow && navRow.scrollWidth > navRow.clientWidth) {
+        const rowRect = navRow.getBoundingClientRect();
+        const btnRect = targetBtn.getBoundingClientRect();
+        const btnLeft = btnRect.left - rowRect.left + navRow.scrollLeft;
+        const btnRight = btnLeft + btnRect.width;
+        if (btnLeft < navRow.scrollLeft) {
+            navRow.scrollLeft = btnLeft;
+        } else if (btnRight > navRow.scrollLeft + navRow.clientWidth) {
+            navRow.scrollLeft = btnRight - navRow.clientWidth;
+        }
+    }
+
     if (tabId === 'dictionary' && document.getElementById('dictionary-body').children.length === 0) {
         renderDictionary();
     } else if (tabId === 'flashcards') {
         updateFlashcard();
     } else if (tabId === 'about') {
         renderActivityGraph();
+    }
+}
+
+// ================= ДАШБОРД (ГЛАВНАЯ) =================
+function renderHome() {
+    const greeting = document.getElementById('home-greeting');
+    if (greeting) greeting.textContent = __('homeTitle');
+    const subtitle = document.getElementById('home-subtitle');
+    if (subtitle) subtitle.textContent = __('welcomeSubtitle');
+    const contLabel = document.getElementById('home-continue-label');
+    if (contLabel) contLabel.textContent = __('homeContinue');
+
+    const container = document.getElementById('home-stats');
+    if (container) {
+        const totalQ = settings.totalQuestions || 0;
+        const correct = settings.totalCorrect || 0;
+        const accuracy = totalQ > 0 ? Math.round((correct / totalQ) * 100) : 0;
+        const learned = (settings.verbsLearned || []).length;
+        const totalVerbs = getFullVerbList().length;
+        const cards = [
+            { label: __('homeLearned'), value: learned, suffix: ' ' + __('homeOf') + ' ' + totalVerbs, color: 'text-emerald-500' },
+            { label: __('homeProgress'), value: totalQ, suffix: '', color: 'text-indigo-500' },
+            { label: __('statsAccuracy'), value: accuracy, suffix: '%', color: accuracy >= 80 ? 'text-emerald-500' : accuracy >= 50 ? 'text-amber-500' : 'text-red-500' },
+            { label: __('statsBestStreak'), value: settings.bestStreak || 0, suffix: '', color: 'text-orange-500' },
+        ];
+        container.innerHTML = cards.map((c, i) => `
+            <div class="bg-white rounded-xl shadow-md p-4 text-center">
+                <div class="text-xl sm:text-2xl font-bold ${c.color} home-stat-value" id="home-stat-${i}">0${c.suffix}</div>
+                <div class="text-xs text-slate-400 mt-1">${c.label}</div>
+            </div>
+        `).join('');
+        cards.forEach((c, i) => {
+            const el = document.getElementById('home-stat-' + i);
+            if (el) animateCount(el, c.value, c.suffix);
+        });
+    }
+
+    const vod = document.getElementById('home-verb-of-day');
+    if (vod) {
+        const verb = getVerbOfDay();
+        if (verb) {
+            vod.innerHTML = `
+                <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="text-center sm:text-left">
+                        <div class="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-1"><i class="fas fa-sun mr-1"></i> ${__('verbOfDay')}</div>
+                        <div class="text-2xl font-extrabold text-amber-800">${verb.v1}</div>
+                        <div class="text-sm text-amber-600">${verb.v2} → ${verb.v3}</div>
+                        <div class="text-xs text-amber-500 mt-1">${getVerbTranslation(verb)}</div>
+                    </div>
+                    <button onclick="homeStart('trainer')" class="bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold py-2.5 px-5 rounded-xl shadow transition-colors">
+                        <i class="fas fa-dumbbell mr-1"></i> ${__('navTrainer')}
+                    </button>
+                </div>`;
+        }
+    }
+
+    const mis = document.getElementById('home-mistakes');
+    if (mis) {
+        const stats = getMistakeStats();
+        if (stats && stats.total > 0) {
+            const verbs = mistakesList.length;
+            mis.innerHTML = `
+                <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div>
+                            <div class="text-sm font-bold text-slate-700">${__('misProgressWords')} ${verbs} (${__('misProgressTotal')} ${stats.total} ${__('misProgressErrors')})</div>
+                            <div class="text-xs text-slate-400">${__('smartOrderDesc')}</div>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('mistakes')" class="bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-2.5 px-5 rounded-xl shadow transition-colors">
+                        <i class="fas fa-tasks mr-1"></i> ${__('navMistakes')}
+                    </button>
+                </div>`;
+        } else {
+            mis.innerHTML = `
+                <div class="bg-white rounded-xl shadow-md p-6 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-500"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <div class="text-sm font-bold text-slate-700">${__('statsNoMistakes')}</div>
+                        <div class="text-xs text-slate-400">${__('misEmpty')}</div>
+                    </div>
+                </div>`;
+        }
+    }
+}
+
+function homeContinue() {
+    switchTab(settings.lastActiveTab || 'trainer');
+}
+
+function homeStart(mode) {
+    if (mode === 'trainer') {
+        switchTab('trainer');
+    } else if (mode === 'flashcards') {
+        switchTab('flashcards');
+    } else if (mode === 'letters') {
+        switchTab('letters');
+        const start = document.getElementById('letters-start');
+        if (start && !start.classList.contains('hidden')) startLettersTrainer();
+    } else if (mode === 'speed') {
+        switchTab('speed');
+        startSpeedRun();
+    }
+}
+
+// ================= UX-ХЕЛПЕРЫ =================
+function animateCount(el, target, suffix, duration) {
+    if (!el) return;
+    duration = duration || 700;
+    const startTime = performance.now();
+    function step(now) {
+        const p = Math.min(1, (now - startTime) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + (suffix || '');
+        if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
+function vibrate(pattern) {
+    if (settings.haptics === false) return;
+    try {
+        if (navigator.vibrate) navigator.vibrate(pattern);
+    } catch (e) {}
+}
+
+function burstConfetti(container) {
+    if (!container) return;
+    const colors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#f472b6'];
+    for (let i = 0; i < 22; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = (20 + Math.random() * 60) + '%';
+        piece.style.background = colors[i % colors.length];
+        piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+        piece.style.animationDelay = (Math.random() * 0.25) + 's';
+        container.appendChild(piece);
+        setTimeout(() => piece.remove(), 1900);
+    }
+}
+
+function answerFeedback(correct, feedbackEl) {
+    if (!feedbackEl) return;
+    if (correct) {
+        vibrate(30);
+        feedbackEl.classList.remove('shake');
+        feedbackEl.classList.add('pop');
+        burstConfetti(feedbackEl);
+        setTimeout(() => feedbackEl.classList.remove('pop'), 400);
+    } else {
+        vibrate([60, 40, 60]);
+        feedbackEl.classList.remove('pop');
+        feedbackEl.classList.add('shake');
+        setTimeout(() => feedbackEl.classList.remove('shake'), 500);
+    }
+}
+
+function toggleFocusMode(force) {
+    const on = force !== undefined ? !!force : !document.body.classList.contains('focus-mode');
+    document.body.classList.toggle('focus-mode', on);
+    const btn = document.getElementById('btn-focus-mode');
+    if (btn) {
+        const label = btn.querySelector('.focus-label');
+        if (label) label.textContent = on ? __('focusExit') : __('focusMode');
+        btn.setAttribute('title', on ? __('focusExit') : __('focusMode'));
     }
 }
 
@@ -283,18 +943,18 @@ function renderDictionary() {
         tr.innerHTML = `
             <td class="p-4 border-b border-slate-200 font-bold text-indigo-700">
                 <div class="flex items-center gap-1">
-                    <button onclick="event.stopPropagation(); toggleFavorite('${v1Key}')" class="fav-btn" title="${isFav ? 'Убрать из избранного' : 'В избранное'}" aria-label="${isFav ? 'Убрать из избранного' : 'В избранное'}">
+                    <button onclick="event.stopPropagation(); toggleFavorite('${v1Key}')" class="fav-btn" title="${isFav ? __('favRemove') : __('favAdd')}" aria-label="${isFav ? __('favRemove') : __('favAdd')}">
                         <i class="fas fa-star${isFav ? '' : '-regular'} ${isFav ? 'text-yellow-400' : 'text-slate-300'}"></i>
                     </button>
                     ${verb.v1}
-                    <button onclick="event.stopPropagation(); speak('${verb.v1}', 'en-US')" class="tts-btn" title="Слушать" aria-label="Слушать">
+                    <button onclick="event.stopPropagation(); speak('${verb.v1}', 'en-US')" class="tts-btn" title="${__('ttsListen')}" aria-label="${__('ttsListen')}">
                         <i class="fas fa-volume-up text-sm"></i>
                     </button>
                 </div>
             </td>
             <td class="p-4 border-b border-slate-200 font-medium">${verb.v2}</td>
             <td class="p-4 border-b border-slate-200 font-medium">${verb.v3}</td>
-            <td class="p-4 border-b border-slate-200 text-slate-600">${verb.translation}</td>
+            <td class="p-4 border-b border-slate-200 text-slate-600">${getVerbTranslation(verb)}</td>
             <td class="p-4 border-b border-slate-200 text-center">
                 <span class="text-xs font-mono text-slate-400 mr-1">${groupLabels[group]}</span>
                 ${getVerbProgress(verb.v1)}
@@ -302,6 +962,54 @@ function renderDictionary() {
             </td>
         `;
         tbody.appendChild(tr);
+    });
+
+    if (data.length === 0) {
+        const tr = document.createElement('tr');
+        tr.id = 'dict-empty-row';
+        tr.innerHTML = '<td colspan="5" class="p-8 text-center text-slate-400">' + (favOnly ? __('emptyDictFav') : __('emptyDictSearch')) + '</td>';
+        tbody.appendChild(tr);
+    }
+}
+
+function highlightDictRow(row, term) {
+    row.querySelectorAll('mark.search-hit').forEach(function(m) {
+        const parent = m.parentNode;
+        parent.replaceChild(document.createTextNode(m.textContent), m);
+        parent.normalize();
+    });
+    if (!term) return;
+    row.querySelectorAll('td').forEach(function(td) {
+        const textNodes = [];
+        const walker = document.createTreeWalker(td, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) {
+            const parent = node.parentNode;
+            if (!parent || parent.nodeType !== 1) continue;
+            const tag = parent.tagName;
+            if (tag === 'BUTTON' || tag === 'I' || tag === 'MARK' || tag === 'SCRIPT' || tag === 'STYLE') continue;
+            if (!node.nodeValue.trim()) continue;
+            textNodes.push(node);
+        }
+        textNodes.forEach(function(textNode) {
+            const text = textNode.nodeValue;
+            const lower = text.toLowerCase();
+            let idx = lower.indexOf(term);
+            if (idx === -1) return;
+            const frag = document.createDocumentFragment();
+            let last = 0;
+            while (idx !== -1) {
+                if (idx > last) frag.appendChild(document.createTextNode(text.slice(last, idx)));
+                const mark = document.createElement('mark');
+                mark.className = 'search-hit';
+                mark.textContent = text.slice(idx, idx + term.length);
+                frag.appendChild(mark);
+                last = idx + term.length;
+                idx = lower.indexOf(term, last);
+            }
+            if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+            textNode.parentNode.replaceChild(frag, textNode);
+        });
     });
 }
 
@@ -348,7 +1056,7 @@ function printDictionary() {
     const groupLabels = ['', 'AAA', 'ABB', 'ABA', 'ABC'];
     getFullVerbList().forEach(v => {
         const g = classifyVerb(v);
-        html += '<tr><td class="v1">' + v.v1 + '<span class="group">' + groupLabels[g] + '</span></td><td>' + v.v2 + '</td><td>' + v.v3 + '</td><td>' + v.translation + '</td></tr>';
+        html += '<tr><td class="v1">' + v.v1 + '<span class="group">' + groupLabels[g] + '</span></td><td>' + v.v2 + '</td><td>' + v.v3 + '</td><td>' + getVerbTranslation(v) + '</td></tr>';
     });
     html += '</tbody></table></body></html>';
     const win = window.open('', '_blank');
@@ -358,16 +1066,35 @@ function printDictionary() {
 }
 
 function filterDictionary() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
+    const raw = document.getElementById('searchInput').value.toLowerCase().trim();
     const rows = document.getElementById('dictionary-body').getElementsByTagName('tr');
+    let anyVisible = false;
 
     for (let i = 0; i < rows.length; i++) {
-        const textContent = rows[i].textContent || rows[i].innerText;
-        if (textContent.toLowerCase().indexOf(input) > -1) {
-            rows[i].style.display = "";
+        const row = rows[i];
+        if (row.id === 'dict-empty-row') continue;
+        const textContent = (row.textContent || '').toLowerCase();
+        if (raw === '' || textContent.indexOf(raw) > -1) {
+            row.style.display = "";
+            anyVisible = true;
+            highlightDictRow(row, raw);
         } else {
-            rows[i].style.display = "none";
+            row.style.display = "none";
         }
+    }
+
+    const tbody = document.getElementById('dictionary-body');
+    let emptyRow = document.getElementById('dict-empty-row');
+    if (!anyVisible) {
+        if (!emptyRow) {
+            emptyRow = document.createElement('tr');
+            emptyRow.id = 'dict-empty-row';
+            emptyRow.innerHTML = '<td colspan="5" class="p-8 text-center text-slate-400">' + __('emptyDictSearch') + '</td>';
+            tbody.appendChild(emptyRow);
+        }
+        emptyRow.style.display = "";
+    } else if (emptyRow) {
+        emptyRow.remove();
     }
 }
 
@@ -426,7 +1153,7 @@ function setFlashcardData() {
     document.getElementById('flashcard-v1').textContent = verb.v1;
     document.getElementById('flashcard-v2').textContent = verb.v2;
     document.getElementById('flashcard-v3').textContent = verb.v3;
-    document.getElementById('flashcard-translation').textContent = verb.translation;
+    document.getElementById('flashcard-translation').textContent = getVerbTranslation(verb);
     document.getElementById('flashcard-counter').textContent = `${flashcardIndex + 1} / ${total}`;
 }
 
@@ -636,7 +1363,7 @@ function showVerbDetail(v1Key) {
     if (!verb) return;
     const err = errorStats[v1Key];
     const lastSeen = settings.verbLastSeen?.[v1Key];
-    document.getElementById('verb-detail-title').textContent = verb.v1 + ' — ' + verb.translation;
+    document.getElementById('verb-detail-title').textContent = verb.v1 + ' — ' + getVerbTranslation(verb);
     let html = '';
     html += '<div class="bg-indigo-50 rounded-xl p-4 grid grid-cols-3 gap-3 text-center">';
     html += '<div><div class="text-lg font-bold text-indigo-600">' + verb.v1 + '</div><div class="text-xs text-indigo-400">V1</div></div>';
@@ -645,32 +1372,32 @@ function showVerbDetail(v1Key) {
     html += '</div>';
     const groupLabels = ['', 'AAA', 'ABB', 'ABA', 'ABC'];
     const group = classifyVerb(verb);
-    html += '<div class="flex justify-between items-center px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">Группа</span><span class="font-bold text-slate-700">' + groupLabels[group] + '</span></div>';
-    html += '<div class="flex justify-between items-center px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">Сложность</span><span class="font-bold text-slate-700">' + verb.complexity + '</span></div>';
+    html += '<div class="flex justify-between items-center px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">' + __('dictGroup') + '</span><span class="font-bold text-slate-700">' + groupLabels[group] + '</span></div>';
+    html += '<div class="flex justify-between items-center px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">' + __('dictComplexity') + '</span><span class="font-bold text-slate-700">' + verb.complexity + '</span></div>';
     if (err) {
         const forms = err.forms || {};
-        html += '<div class="border-t border-slate-200 pt-3"><div class="text-sm font-bold text-slate-700 mb-2">Ошибки по формам:</div>';
+        html += '<div class="border-t border-slate-200 pt-3"><div class="text-sm font-bold text-slate-700 mb-2">' + __('dictErrorsByForm') + '</div>';
         html += '<div class="space-y-1.5">';
         html += '<div class="flex justify-between px-3 py-1.5 bg-red-50 rounded-lg"><span>V2</span><span class="font-bold text-red-600">' + (forms.v2 || 0) + '</span></div>';
         html += '<div class="flex justify-between px-3 py-1.5 bg-red-50 rounded-lg"><span>V3</span><span class="font-bold text-red-600">' + (forms.v3 || 0) + '</span></div>';
-        html += '<div class="flex justify-between px-3 py-1.5 bg-red-50 rounded-lg"><span>Правописание</span><span class="font-bold text-red-600">' + (forms.spelling || 0) + '</span></div>';
-        html += '<div class="flex justify-between px-3 py-1.5 bg-red-100 rounded-lg font-bold"><span>Всего</span><span class="text-red-700">' + (err.mistakes || 0) + '</span></div>';
+        html += '<div class="flex justify-between px-3 py-1.5 bg-red-50 rounded-lg"><span>' + __('dictSpelling') + '</span><span class="font-bold text-red-600">' + (forms.spelling || 0) + '</span></div>';
+        html += '<div class="flex justify-between px-3 py-1.5 bg-red-100 rounded-lg font-bold"><span>' + __('dictTotal') + '</span><span class="text-red-700">' + (err.mistakes || 0) + '</span></div>';
         html += '</div></div>';
         if (err.lastMistake) {
-            html += '<div class="flex justify-between px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">Последняя ошибка</span><span class="text-xs text-slate-600">' + err.lastMistake + '</span></div>';
+            html += '<div class="flex justify-between px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">' + __('dictLastError') + '</span><span class="text-xs text-slate-600">' + err.lastMistake + '</span></div>';
         }
     } else {
-        html += '<div class="p-4 bg-green-50 rounded-lg text-center text-green-700 font-medium"><i class="fas fa-check-circle mr-2"></i>Ошибок нет</div>';
+        html += '<div class="p-4 bg-green-50 rounded-lg text-center text-green-700 font-medium"><i class="fas fa-check-circle mr-2"></i>' + __('dictNoErrors') + '</div>';
     }
     if (lastSeen) {
         const d = new Date(lastSeen);
-        html += '<div class="flex justify-between px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">Последний повтор</span><span class="text-xs text-slate-600">' + d.toLocaleString(settings.lang === 'en' ? 'en-US' : 'ru-RU') + '</span></div>';
+        html += '<div class="flex justify-between px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">' + __('dictLastRepeat') + '</span><span class="text-xs text-slate-600">' + d.toLocaleString(uiLocale()) + '</span></div>';
     }
     const isFav = isFavorite(v1Key);
-    html += '<div class="flex justify-between px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">В избранном</span><span class="font-bold ' + (isFav ? 'text-yellow-500' : 'text-slate-400') + '"><i class="fas fa-star' + (isFav ? '' : '-regular') + '"></i></span></div>';
+    html += '<div class="flex justify-between px-3 py-2 bg-slate-50 rounded-lg"><span class="text-slate-500">' + __('dictInFavorites') + '</span><span class="font-bold ' + (isFav ? 'text-yellow-500' : 'text-slate-400') + '"><i class="fas fa-star' + (isFav ? '' : '-regular') + '"></i></span></div>';
 
     const shuffledTemplates = [...sentenceTemplates].sort(() => Math.random() - 0.5).slice(0, 2);
-    let examplesHtml = '<div class="border-t border-slate-200 pt-3 mt-2"><div class="text-sm font-bold text-slate-700 mb-2"><i class="fas fa-quote-right mr-1"></i>Примеры</div><div class="space-y-2">';
+    let examplesHtml = '<div class="border-t border-slate-200 pt-3 mt-2"><div class="text-sm font-bold text-slate-700 mb-2"><i class="fas fa-quote-right mr-1"></i>' + __('dictExamples') + '</div><div class="space-y-2">';
     shuffledTemplates.forEach(function(t) {
         const formKey = t.form;
         const correctForm = verb[formKey] || '';
@@ -844,7 +1571,7 @@ function updateLettersScoreboard() {
 
 function loadLettersQuestion() {
     const verb = lettersQueue[currentLettersIdx];
-    document.getElementById('letters-translation').textContent = verb.translation;
+    document.getElementById('letters-translation').textContent = getVerbTranslation(verb);
 
     const activeForms = getActiveForms();
     if (activeForms.length === 0) activeForms.push(0);
@@ -999,10 +1726,11 @@ function checkLettersAnswer() {
 
     const verb = lettersQueue[currentLettersIdx];
     markVerbSeen(verb.v1);
+    answerFeedback(isAllCorrect, feedback);
     document.getElementById('letters-card-v1').textContent = verb.v1;
     document.getElementById('letters-card-v2').textContent = verb.v2;
     document.getElementById('letters-card-v3').textContent = verb.v3;
-    document.getElementById('letters-card-translation').textContent = verb.translation;
+    document.getElementById('letters-card-translation').textContent = getVerbTranslation(verb);
 
     const cardIcon = document.getElementById('letters-card-icon');
     const cardTitle = document.getElementById('letters-card-title');
@@ -1226,7 +1954,7 @@ function loadTrainerQuestion() {
     if (matchArea) matchArea.classList.add('hidden');
 
     if (trainerMode === 'normal') {
-        transEl.textContent = currentVerb.translation;
+        transEl.textContent = getVerbTranslation(currentVerb);
         transEl.style.display = (settings.showTranslation !== false) ? '' : 'none';
         v1El.textContent = currentVerb.v1;
         if (v1Row) v1Row.classList.add('hidden');
@@ -1237,7 +1965,7 @@ function loadTrainerQuestion() {
         document.getElementById('trainer-feedback-area').className = 'space-y-6';
         inputV2.focus();
     } else if (trainerMode === 'reverse-v1') {
-        transEl.textContent = currentVerb.translation;
+        transEl.textContent = getVerbTranslation(currentVerb);
         transEl.style.display = '';
         v1El.textContent = '';
         if (v1Row) v1Row.classList.remove('hidden');
@@ -1246,7 +1974,7 @@ function loadTrainerQuestion() {
         document.getElementById('trainer-feedback-area').className = 'space-y-6';
         inputV1.focus();
     } else if (trainerMode === 'reverse-forms') {
-        transEl.textContent = currentVerb.translation;
+        transEl.textContent = getVerbTranslation(currentVerb);
         transEl.style.display = (settings.showTranslation !== false) ? '' : 'none';
         v1El.textContent = '';
         if (v1Row) v1Row.classList.remove('hidden');
@@ -1261,7 +1989,7 @@ function loadTrainerQuestion() {
         document.getElementById('trainer-v3-display').textContent = currentVerb.v3;
         inputV1.focus();
     } else if (trainerMode === 'sentences') {
-        transEl.textContent = currentVerb.translation;
+        transEl.textContent = getVerbTranslation(currentVerb);
         transEl.style.display = (settings.showTranslation !== false) ? '' : 'none';
         v1El.textContent = '';
         if (v1Row) v1Row.classList.add('hidden');
@@ -1282,7 +2010,7 @@ function loadTrainerQuestion() {
             if (v3InputWrapper) { v3InputWrapper.classList.remove('hidden'); v3InputWrapper.querySelector('input').focus(); }
         }
     } else if (trainerMode === 'match') {
-        transEl.textContent = currentVerb.translation;
+        transEl.textContent = getVerbTranslation(currentVerb);
         transEl.style.display = (settings.showTranslation !== false) ? '' : 'none';
         v1El.textContent = currentVerb.v1;
         if (v1Row) v1Row.classList.add('hidden');
@@ -1522,6 +2250,7 @@ function checkTrainerAnswer() {
 
     if (allCorrect) trainerScore++;
     markVerbSeen(currentVerb.v1);
+    answerFeedback(allCorrect, document.getElementById('trainer-feedback'));
 
     updateTrainerScoreboard();
     document.getElementById('btn-check').classList.add('hidden');
@@ -1620,7 +2349,7 @@ function openMistakesTab() {
 
 function startMistakesMode(mode) {
     mistakesMode = mode;
-    const filtered = shuffleArray([...mistakesList]);
+    const filtered = settings.smartOrder !== false ? getSmartMistakesList() : shuffleArray([...mistakesList]);
     if (filtered.length === 0) return;
 
     mistakesQueue = filtered;
@@ -1680,7 +2409,7 @@ function loadMistakesQuestion() {
 
 function loadMistakesFormsQuestion() {
     const tr = document.getElementById('mistakes-translation');
-    tr.textContent = mistakesCurrentVerb.translation;
+    tr.textContent = getVerbTranslation(mistakesCurrentVerb);
     tr.style.display = (settings.showTranslation !== false) ? '' : 'none';
     document.getElementById('mistakes-v1').textContent = mistakesCurrentVerb.v1;
 
@@ -1748,7 +2477,7 @@ function checkMistakesFormsAnswer() {
 
 function loadMistakesLettersQuestion() {
     const verb = mistakesCurrentVerb;
-    document.getElementById('mistakes-letters-translation').textContent = verb.translation;
+    document.getElementById('mistakes-letters-translation').textContent = getVerbTranslation(verb);
 
     const activeForms = getActiveForms();
     const fc = activeForms.length > 0 ? activeForms[Math.floor(Math.random() * activeForms.length)] : 0;
@@ -1866,7 +2595,7 @@ function checkMistakesLettersAnswer() {
     document.getElementById('mistakes-letters-card-v1').textContent = verb.v1;
     document.getElementById('mistakes-letters-card-v2').textContent = verb.v2;
     document.getElementById('mistakes-letters-card-v3').textContent = verb.v3;
-    document.getElementById('mistakes-letters-card-translation').textContent = verb.translation;
+    document.getElementById('mistakes-letters-card-translation').textContent = getVerbTranslation(verb);
     document.getElementById('mistakes-letters-verb-card').classList.remove('hidden');
 
     document.getElementById('btn-mistakes-letters-check').classList.add('hidden');
@@ -2006,6 +2735,10 @@ function openSettings() {
     if (soundEl) soundEl.checked = settings.soundEnabled !== false;
     const spacedEl = document.getElementById('setting-spaced-rep');
     if (spacedEl) spacedEl.checked = settings.useSpacedRep === true;
+    const smartEl = document.getElementById('setting-smart-order');
+    if (smartEl) smartEl.checked = settings.smartOrder !== false;
+    const hapticsEl = document.getElementById('setting-haptics');
+    if (hapticsEl) hapticsEl.checked = settings.haptics !== false;
     const verbGroupEl = document.getElementById('setting-verb-group');
     if (verbGroupEl) verbGroupEl.value = settings.verbGroup || 'all';
 
@@ -2112,6 +2845,21 @@ function switchSettingsTab(tab, btn) {
 
 function showWelcome() {
     document.getElementById('welcome-modal').classList.add('open');
+    updateWelcomeLangButtons();
+}
+
+function setWelcomeLang(lang) {
+    settings.lang = lang;
+    localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
+    applyLanguage();
+    updateWelcomeLangButtons();
+}
+
+function updateWelcomeLangButtons() {
+    const current = settings.lang || getSystemLang();
+    document.querySelectorAll('#welcome-lang-grid .welcome-lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === current);
+    });
 }
 
 function dismissWelcome() {
@@ -2131,6 +2879,11 @@ function dismissBetaInfo() {
 function applyCompactMode() {
     const isCompact = settings.compact === true;
     document.body.classList.toggle('compact', isCompact);
+}
+
+function applyWelcomeAlign() {
+    const card = document.getElementById('home-welcome-card');
+    if (card) card.classList.toggle('welcome-right', settings.alignRight === true);
 }
 
 // ================= ЦВЕТОВЫЕ ФУНКЦИИ =================
@@ -2307,7 +3060,7 @@ function renderCustomVerbsList() {
         html += '<span class="font-bold text-indigo-600 w-16">' + v.v1 + '</span>';
         html += '<span class="text-slate-600 w-20">' + v.v2 + '</span>';
         html += '<span class="text-slate-600 w-20">' + v.v3 + '</span>';
-        html += '<span class="text-slate-400 flex-1">' + v.translation + '</span>';
+        html += '<span class="text-slate-400 flex-1">' + getVerbTranslation(v) + '</span>';
         html += '<button onclick="removeCustomVerb(\'' + v.v1.replace(/'/g, "\\'") + '\')" class="text-red-400 hover:text-red-600"><i class="fas fa-times"></i></button>';
         html += '</div>';
     });
@@ -2321,7 +3074,7 @@ function recordMistake(verb, field) {
     }
     if (!errorStats[key].forms) errorStats[key].forms = { v2: 0, v3: 0, spelling: 0 };
     errorStats[key].mistakes++;
-    errorStats[key].lastMistake = new Date().toLocaleString(settings.lang === 'en' ? 'en-US' : 'ru-RU');
+    errorStats[key].lastMistake = new Date().toLocaleString(uiLocale());
     if (field && errorStats[key].forms[field] !== undefined) {
         errorStats[key].forms[field]++;
     }
@@ -2349,7 +3102,7 @@ function showToast(msg, type) {
 
 function exportResults(format = 'json') {
     const results = {
-        exportDate: new Date().toLocaleString(settings.lang === 'en' ? 'en-US' : 'ru-RU'),
+        exportDate: new Date().toLocaleString(uiLocale()),
         errorStats: errorStats,
         totalMistakes: Object.values(errorStats).reduce((sum, v) => sum + v.mistakes, 0),
         totalErrors: Object.keys(errorStats).length
@@ -2360,9 +3113,9 @@ function exportResults(format = 'json') {
         const dataBlob = new Blob([dataStr], { type: 'application/json' });
         downloadFile(dataBlob, `verb-trainer-errors-${new Date().getTime()}.json`);
     } else if (format === 'csv') {
-        let csv = 'Глагол (V1),Перевод,Количество ошибок,Последняя ошибка\n';
+        let csv = __('csvHeader') + '\n';
         Object.entries(errorStats).forEach(([key, data]) => {
-            csv += `"${data.verb.v1}","${data.verb.translation}",${data.mistakes},"${data.lastMistake}"\n`;
+            csv += `"${data.verb.v1}","${data.getVerbTranslation(verb)}",${data.mistakes},"${data.lastMistake}"\n`;
         });
         const dataBlob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         downloadFile(dataBlob, `verb-trainer-errors-${new Date().getTime()}.csv`);
@@ -2456,6 +3209,15 @@ function getMistakeStats() {
     return { total, topMistakes };
 }
 
+function getSmartMistakesList() {
+    return [...mistakesList].sort((a, b) => {
+        const ea = errorStats[a.v1] || { mistakes: 0, lastMistake: null };
+        const eb = errorStats[b.v1] || { mistakes: 0, lastMistake: null };
+        if (eb.mistakes !== ea.mistakes) return eb.mistakes - ea.mistakes;
+        return new Date(eb.lastMistake || 0) - new Date(ea.lastMistake || 0);
+    });
+}
+
 function getActiveForms() {
     const forms = [];
     if (settings.formsV1) forms.push(0);
@@ -2514,7 +3276,7 @@ function renderVerbOfDay() {
         '<div class="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-2"><i class="fas fa-sun mr-1"></i> ' + __('verbOfDay') + '</div>' +
         '<div class="text-2xl font-extrabold text-amber-800 mb-1">' + verb.v1 + '</div>' +
         '<div class="text-sm text-amber-600">' + verb.v2 + ' → ' + verb.v3 + '</div>' +
-        '<div class="text-xs text-amber-500 mt-1">' + verb.translation + '</div>' +
+        '<div class="text-xs text-amber-500 mt-1">' + getVerbTranslation(verb) + '</div>' +
         '</div>';
 }
 
@@ -2577,7 +3339,7 @@ function loadPrepQuestion() {
     }
     prepCurrentVerb = prepQueue[prepIdx];
     document.getElementById('prep-v1').textContent = prepCurrentVerb.v1;
-    document.getElementById('prep-translation').textContent = prepCurrentVerb.translation;
+    document.getElementById('prep-translation').textContent = getVerbTranslation(prepCurrentVerb);
     document.getElementById('prep-progress').textContent = (prepIdx + 1) + ' / ' + prepQueue.length;
 
     const input = document.getElementById('prep-input');
@@ -2805,17 +3567,21 @@ function renderStatsOverview() {
     const correct = settings.totalCorrect || 0;
     const accuracy = totalQ > 0 ? Math.round((correct / totalQ) * 100) : 0;
     const cards = [
-        { label: __('statsSessions'), value: settings.sessionsCompleted || 0, icon: 'fa-session', color: 'text-blue-500' },
-        { label: __('statsQuestions'), value: totalQ, icon: 'fa-question-circle', color: 'text-indigo-500' },
-        { label: __('statsAccuracy'), value: accuracy + '%', icon: 'fa-bullseye', color: accuracy >= 80 ? 'text-emerald-500' : accuracy >= 50 ? 'text-amber-500' : 'text-red-500' },
-        { label: __('statsBestStreak'), value: (settings.bestStreak || 0) + ' ✅', icon: 'fa-fire', color: 'text-orange-500' },
+        { label: __('statsSessions'), value: settings.sessionsCompleted || 0, suffix: '', color: 'text-blue-500' },
+        { label: __('statsQuestions'), value: totalQ, suffix: '', color: 'text-indigo-500' },
+        { label: __('statsAccuracy'), value: accuracy, suffix: '%', color: accuracy >= 80 ? 'text-emerald-500' : accuracy >= 50 ? 'text-amber-500' : 'text-red-500' },
+        { label: __('statsBestStreak'), value: settings.bestStreak || 0, suffix: ' ✅', color: 'text-orange-500' },
     ];
-    container.innerHTML = cards.map(c => `
+    container.innerHTML = cards.map((c, i) => `
         <div class="bg-slate-50 rounded-xl p-4 text-center">
-            <div class="text-2xl font-bold ${c.color}">${c.value}</div>
+            <div class="text-2xl font-bold ${c.color}" id="stat-card-${i}">0${c.suffix}</div>
             <div class="text-xs text-slate-400 mt-1">${c.label}</div>
         </div>
     `).join('');
+    cards.forEach((c, i) => {
+        const el = document.getElementById('stat-card-' + i);
+        if (el) animateCount(el, c.value, c.suffix);
+    });
 }
 
 function renderStatsActivity() {
@@ -2970,7 +3736,7 @@ function triggerEasterEgg() {
 
     const toast = document.createElement('div');
     toast.className = 'egg-toast';
-    toast.innerHTML = '<div class="egg-toast-icon">🦉</div><div>Пасхалка найдена! 🎉</div>';
+    toast.innerHTML = '<div class="egg-toast-icon">🦉</div><div>' + __('easterEggFound') + '</div>';
     document.body.appendChild(toast);
 
     requestAnimationFrame(() => toast.classList.add('egg-visible'));
@@ -3003,13 +3769,15 @@ document.addEventListener('keydown', function(event) {
     // Tab shortcuts 1-9
     const num = parseInt(event.key);
     if (num >= 1 && num <= 9) {
-        const tabs = ['dictionary', 'flashcards', 'letters', 'trainer', 'mistakes', 'speed', 'stats', 'updates', 'about'];
+        const tabs = ['dashboard', 'dictionary', 'flashcards', 'letters', 'trainer', 'mistakes', 'speed', 'stats', 'updates'];
         switchTab(tabs[num - 1]);
         return;
     }
     if (event.key === 'Escape') {
         if (document.getElementById('settings-modal').classList.contains('open')) {
             closeSettings();
+        } else if (document.body.classList.contains('focus-mode')) {
+            toggleFocusMode(false);
         }
     } else if (event.key === 'ArrowLeft' && !document.getElementById('view-flashcards').classList.contains('hidden')) {
         prevCard();
@@ -3167,7 +3935,7 @@ function loadSpeedQuestion() {
         input.placeholder = __('speedV3Placeholder');
     } else if (speedQuestionType === 2) {
         label.textContent = __('speedV1Prompt');
-        word.textContent = speedCurrentVerb.translation;
+        word.textContent = getVerbTranslation(speedCurrentVerb);
         input.placeholder = __('speedV1Placeholder');
     } else {
         label.textContent = __('speedV1Prompt');
@@ -3238,6 +4006,7 @@ function checkSpeedAnswer() {
         markVerbSeen(speedCurrentVerb.v1);
     }
 
+    answerFeedback(correct, feedback);
     feedback.classList.remove('hidden');
     document.getElementById('btn-speed-check').classList.add('hidden');
     document.getElementById('btn-speed-next').classList.remove('hidden');
@@ -3352,6 +4121,15 @@ switchTab = function(tabId) {
         resetSpeedRun();
     } else if (tabId === 'stats') {
         renderStats();
+    } else if (tabId === 'dashboard') {
+        renderHome();
+    }
+    if (tabId !== 'dashboard') {
+        settings.lastActiveTab = tabId;
+        localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
+    }
+    if (document.body.classList.contains('focus-mode')) {
+        toggleFocusMode(false);
     }
 };
 
@@ -3361,6 +4139,7 @@ window.onload = () => {
     }
     setGradientCSS(settings.gradientFrom || '#4f46e5', settings.gradientTo || '#7c3aed');
     applyCompactMode();
+    applyWelcomeAlign();
     renderDictionary();
     setFlashcardGroup('all');
     if (document.getElementById('setting-complexity')) {
@@ -3377,6 +4156,7 @@ window.onload = () => {
     applyLanguage();
     updateNavProgress();
     renderVerbOfDay();
+    renderHome();
     renderSpeedLeaderboard();
     const savedGroup = settings.verbGroup || 'all';
     if (savedGroup !== 'all') {

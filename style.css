@@ -1,5 +1,5 @@
 /* EasyVerbs
-   Copyright (C) 2026 Manankik43
+   Copyright (C) 2026 kik4311
    This program is free software under GPL v3 - see LICENSE */
 
 /* ===================== ТЕМА / CSS ПЕРЕМЕННЫЕ ===================== */
@@ -109,6 +109,9 @@ body {
     min-height: 100vh;
     transition: background 0.35s, color 0.35s;
 }
+body.min-h-screen {
+    min-height: 100dvh;
+}
 
 main, footer {
     position: relative;
@@ -204,15 +207,29 @@ main, footer {
 
 /* ===================== НАВИГАЦИЯ ===================== */
 nav.sticky {
-    background: linear-gradient(135deg, color-mix(in srgb, var(--gradient-from) 88%, transparent), color-mix(in srgb, var(--gradient-to) 88%, transparent)) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.18);
-    box-shadow: 0 2px 24px rgba(0,0,0,0.12);
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--gradient-from) 94%, transparent), color-mix(in srgb, var(--gradient-to) 94%, transparent)) !important;
+    background-size: 200% 200% !important;
+    animation: navGradient 16s ease-in-out infinite;
+    border-bottom: 1px solid rgba(255,255,255,0.22);
+    box-shadow: 0 6px 32px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.28);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
+    padding-top: env(safe-area-inset-top);
+}
+@keyframes navGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 body.dark nav.sticky {
-    background: linear-gradient(135deg, color-mix(in srgb, var(--gradient-from) 72%, #000), color-mix(in srgb, var(--gradient-to) 72%, #000)) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--gradient-from) 74%, #000), color-mix(in srgb, var(--gradient-to) 74%, #000)) !important;
+    background-size: 200% 200% !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 6px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+@media (prefers-reduced-motion: reduce) {
+    nav.sticky { animation: none; }
 }
 
 .nav-btn {
@@ -224,16 +241,70 @@ body.dark nav.sticky {
     display: flex;
     align-items: center;
     gap: 0.3rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+.nav-tabs-row {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
+}
+.nav-tabs-row::-webkit-scrollbar {
+    display: none;
 }
 .nav-btn:hover {
     background: rgba(255,255,255,0.15) !important;
 }
 .nav-btn.active {
-    background: rgba(255,255,255,0.2) !important;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    background: rgba(255,255,255,0.28) !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.35) !important;
 }
 body.dark .nav-btn.active {
-    background: rgba(255,255,255,0.12) !important;
+    background: rgba(255,255,255,0.14) !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+/* ===================== ЛОГОТИП ===================== */
+.logo-badge {
+    position: relative;
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    box-shadow:
+        0 0 0 2px rgba(255,255,255,0.95),
+        0 6px 20px rgba(0,0,0,0.28),
+        0 0 22px var(--primary-glow);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    animation: logoFloat 4.5s ease-in-out infinite;
+}
+.logo-badge:hover {
+    transform: scale(1.1) rotate(4deg);
+    box-shadow:
+        0 0 0 2px rgba(255,255,255,1),
+        0 10px 28px rgba(0,0,0,0.32),
+        0 0 34px var(--primary-glow);
+}
+.logo-title {
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.logo-badge-lg {
+    position: relative;
+    background: #ffffff;
+    border-radius: 1.25rem;
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,0.35),
+        0 16px 40px rgba(0,0,0,0.35),
+        0 0 40px rgba(255,255,255,0.25);
+    animation: logoFloat 4.5s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+.logo-badge-lg:hover { transform: scale(1.05); }
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .logo-badge, .logo-badge-lg { animation: none; }
+    .logo-badge:hover { transform: scale(1.05); }
 }
 .nav-label {
     display: none;
@@ -267,6 +338,11 @@ body.dark .nav-btn.active {
     .nav-btn, button, .tts-btn, .fav-btn { min-height: 40px; }
 }
 @media (max-width: 640px) {
+    /* лёгкие фоновые blob-пятна на мобильных: меньше нагрузка на GPU */
+    .blob-1 { animation-duration: 42s; }
+    .blob-2 { animation-duration: 46s; }
+    .blob-3 { animation-duration: 50s; }
+    .blob-4 { animation-duration: 44s; }
     .tr-mode-btn { font-size: 0.75rem !important; padding: 0.4rem 0.75rem !important; }
     #trainer-active, #letters-active, #mistakes-forms-mode, #mistakes-letters-mode { padding: 1rem !important; }
     #trainer-active .text-4xl { font-size: 1.75rem !important; }
@@ -356,8 +432,13 @@ button, .fc-group-btn {
 [class*="bg-indigo-600"]:not(.nav-btn):not(.fc-group-btn)::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    background: linear-gradient(120deg, transparent 25%, rgba(255,255,255,0.35) 50%, transparent 75%);
+    transform: translateX(-130%);
+    transition: transform 0.6s ease;
     pointer-events: none;
+}
+[class*="bg-indigo-600"]:not(.nav-btn):not(.fc-group-btn):hover::after {
+    transform: translateX(130%);
 }
 [class*="bg-indigo-600"]:not(.nav-btn):not(.fc-group-btn):hover {
     transform: translateY(-2px);
@@ -844,6 +925,7 @@ footer {
     color: var(--text-tertiary) !important;
     backdrop-filter: var(--glass-blur-sm);
     -webkit-backdrop-filter: var(--glass-blur-sm);
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 .fade-enter { opacity: 0; transform: translateY(12px); }
@@ -1182,7 +1264,92 @@ body.compact .mb-6 { margin-bottom: 0.5rem !important; }
 body.compact .mb-8 { margin-bottom: 0.75rem !important; }
 
 #welcome-modal .modal-content {
-    max-width: 420px;
+    max-width: 460px;
+}
+
+.font-unbounded {
+    font-family: 'Unbounded', 'Inter', system-ui, sans-serif;
+    letter-spacing: 0.02em;
+}
+
+#welcome-modal .modal-content.welcome-modal-card {
+    background: #ffffff !important;
+}
+body.dark #welcome-modal .modal-content.welcome-modal-card {
+    background: #1e293b !important;
+}
+
+.welcome-lang-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.55rem 0.35rem;
+    border-radius: 0.75rem;
+    border: 1.5px solid var(--glass-border);
+    background: var(--glass-card);
+    color: var(--text-primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.1;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.welcome-lang-btn .flag {
+    font-size: 1.15rem;
+    line-height: 1;
+}
+.welcome-lang-btn:hover {
+    border-color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.welcome-lang-btn.active {
+    border-color: #22c55e;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(34,197,94,0.4);
+}
+body.dark .welcome-lang-btn.active {
+    border-color: #22c55e;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+}
+
+#home-welcome-card .welcome-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+#home-welcome-card .welcome-body .logo-badge-lg {
+    order: 1;
+    margin-bottom: 1rem;
+}
+#home-welcome-card .welcome-text {
+    order: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#home-welcome-card.welcome-right .welcome-body {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: left;
+}
+#home-welcome-card.welcome-right .welcome-body .logo-badge-lg {
+    order: 2;
+    margin-bottom: 0;
+    margin-left: auto;
+}
+#home-welcome-card.welcome-right .welcome-text {
+    align-items: flex-start;
+    flex: 1;
+    min-width: 12rem;
 }
 
 /* ===================== ПАСХАЛКА ===================== */
@@ -1301,3 +1468,54 @@ body.dark #confirm-modal .bg-white { background: var(--glass-elevated) !importan
 body.dark .border-slate-100,
 body.dark .border-slate-200,
 body.dark .border-slate-300 { border-color: var(--glass-border-soft) !important; }
+
+/* ===================== UX-УЛУЧШЕНИЯ ===================== */
+
+/* --- Анимации ответов: конфетти, тряска, всплытие --- */
+#trainer-feedback, #letters-feedback, #speed-feedback { position: relative; }
+.confetti-piece {
+    position: absolute;
+    top: -10px;
+    width: 8px;
+    height: 14px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 5;
+    animation: confetti-fall 1.5s ease-in forwards;
+}
+@keyframes confetti-fall {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(140px) rotate(720deg); opacity: 0; }
+}
+.shake { animation: shake 0.4s ease; }
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+}
+.pop { animation: pop 0.35s ease; }
+@keyframes pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+/* --- Подсветка совпадений в поиске словаря --- */
+mark.search-hit {
+    background: #fde68a;
+    color: inherit;
+    border-radius: 3px;
+    padding: 0 1px;
+}
+body.dark mark.search-hit { background: #b45309; color: #fef3c7; }
+
+/* --- Режим фокуса --- */
+body.focus-mode nav,
+body.focus-mode footer,
+body.focus-mode .blob { display: none !important; }
+body.focus-mode { overflow-y: auto; }
+
+/* --- Дашборд --- */
+#home-stats .home-stat-value { transition: color 0.2s ease; }
