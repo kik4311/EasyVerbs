@@ -50,4 +50,3 @@ cd EasyVerbs
 ## Авторы
 
 - [kik4311](https://github.com/kik4311)
-- [vesno4null](https://github.com/vesno4null)
