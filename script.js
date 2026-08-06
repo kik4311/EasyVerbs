@@ -2307,6 +2307,300 @@ function showTrainerResults() {
     practiceMode = 'normal';
 }
 
+// ================= ФИНАЛЬНЫЙ ЭКЗАМЕН =================
+let examQueue = [];
+let examIdx = 0;
+let examScore = 0;
+let examMistakes = 0;
+let examCurrentVerb = null;
+let examQuestionType = 'forms';
+let examWrongList = [];
+let examGroup = 'all';
+let examCount = '20';
+
+function setExamGroup(group) {
+    examGroup = group;
+    document.querySelectorAll('#view-exam .trainer-group-btn').forEach(btn => {
+        btn.className = "trainer-group-btn px-3 py-1 rounded-full text-xs font-semibold transition-colors bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50";
+    });
+    const btn = document.getElementById('exam-group-' + group);
+    if (btn) btn.className = "trainer-group-btn px-3 py-1 rounded-full text-xs font-semibold transition-colors bg-indigo-600 text-white shadow-sm";
+}
+
+function setExamCount(count) {
+    examCount = count;
+    document.querySelectorAll('#view-exam .tr-mode-btn').forEach(btn => {
+        btn.className = "tr-mode-btn px-4 py-2 rounded-full text-sm font-semibold transition-colors bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50";
+    });
+    const btn = document.getElementById('exam-count-' + count);
+    if (btn) btn.className = "tr-mode-btn px-4 py-2 rounded-full text-sm font-semibold transition-colors bg-indigo-600 text-white shadow-md";
+}
+
+function getExamVerbs() {
+    let verbs = getFullVerbList();
+    const grp = parseInt(examGroup);
+    if (!isNaN(grp)) {
+        verbs = verbs.filter(v => classifyVerb(v) === grp);
+    }
+    let list = shuffleArray(verbs);
+    if (examCount === 'all') return list;
+    const count = Math.min(parseInt(examCount) || 20, list.length);
+    return list.slice(0, count);
+}
+
+function examQuestionTypes() {
+    return ['forms', 'forms', 'v1', 'translation', 'v2', 'v3'];
+}
+
+function loadExamQuestion() {
+    examCurrentVerb = examQueue[examIdx];
+    const typeEl = document.getElementById('exam-type-label');
+    const wordEl = document.getElementById('exam-word');
+    const transEl = document.getElementById('exam-translation');
+    const inputArea = document.getElementById('exam-input-area');
+    const mcqArea = document.getElementById('exam-mcq-area');
+    const v2Row = document.getElementById('exam-v2-row');
+    const v3Row = document.getElementById('exam-v3-row');
+    const inputV2 = document.getElementById('exam-input-v2');
+    const inputV3 = document.getElementById('exam-input-v3');
+
+    examQuestionType = examQuestionTypes()[examIdx % examQuestionTypes().length];
+    inputV2.value = '';
+    inputV3.value = '';
+    [inputV2, inputV3].forEach(inp => {
+        inp.className = "w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-colors text-lg";
+        inp.disabled = false;
+    });
+
+    inputArea.classList.remove('hidden');
+    mcqArea.classList.add('hidden');
+
+    if (examQuestionType === 'forms') {
+        typeEl.textContent = __('examTypeForms');
+        transEl.textContent = getVerbTranslation(examCurrentVerb);
+        wordEl.textContent = examCurrentVerb.v1;
+        v2Row.classList.remove('hidden');
+        v3Row.classList.remove('hidden');
+        inputV2.focus();
+    } else if (examQuestionType === 'v1') {
+        typeEl.textContent = __('examTypeV1');
+        transEl.textContent = getVerbTranslation(examCurrentVerb);
+        wordEl.textContent = examCurrentVerb.v2 + ' / ' + examCurrentVerb.v3;
+        v2Row.classList.add('hidden');
+        v3Row.classList.add('hidden');
+        showExamMCQ(examCurrentVerb.v1, [examCurrentVerb.v1]);
+        inputArea.classList.add('hidden');
+        mcqArea.classList.remove('hidden');
+    } else if (examQuestionType === 'v2') {
+        typeEl.textContent = __('examTypeV2');
+        transEl.textContent = getVerbTranslation(examCurrentVerb);
+        wordEl.textContent = examCurrentVerb.v1;
+        v2Row.classList.add('hidden');
+        v3Row.classList.add('hidden');
+        showExamMCQ(examCurrentVerb.v2, [examCurrentVerb.v2]);
+        inputArea.classList.add('hidden');
+        mcqArea.classList.remove('hidden');
+    } else if (examQuestionType === 'v3') {
+        typeEl.textContent = __('examTypeV3');
+        transEl.textContent = getVerbTranslation(examCurrentVerb);
+        wordEl.textContent = examCurrentVerb.v1;
+        v2Row.classList.add('hidden');
+        v3Row.classList.add('hidden');
+        showExamMCQ(examCurrentVerb.v3, [examCurrentVerb.v3]);
+        inputArea.classList.add('hidden');
+        mcqArea.classList.remove('hidden');
+    } else if (examQuestionType === 'translation') {
+        typeEl.textContent = __('examTypeTranslation');
+        transEl.textContent = '';
+        wordEl.textContent = examCurrentVerb.v1;
+        v2Row.classList.add('hidden');
+        v3Row.classList.add('hidden');
+        showExamMCQ(getVerbTranslation(examCurrentVerb), [getVerbTranslation(examCurrentVerb)]);
+        inputArea.classList.add('hidden');
+        mcqArea.classList.remove('hidden');
+    }
+
+    document.getElementById('exam-feedback').classList.add('hidden');
+    document.getElementById('btn-exam-check').classList.remove('hidden');
+    document.getElementById('btn-exam-next').classList.add('hidden');
+}
+
+function showExamMCQ(correctAnswer, correctArr) {
+    const container = document.getElementById('exam-options');
+    container.innerHTML = '';
+    const wrongOptions = new Set();
+    const allVerbs = getFullVerbList();
+    while (wrongOptions.size < 3) {
+        const rand = allVerbs[Math.floor(Math.random() * allVerbs.length)];
+        let val;
+        if (examQuestionType === 'translation') {
+            val = getVerbTranslation(rand);
+        } else {
+            val = rand[examQuestionType];
+        }
+        if (!val) continue;
+        if (!correctArr.includes(val) && !wrongOptions.has(val)) {
+            wrongOptions.add(val);
+        }
+    }
+    const options = shuffleArray([correctAnswer, ...Array.from(wrongOptions)]);
+    options.forEach(function(opt) {
+        const btn = document.createElement('button');
+        btn.className = 'px-4 py-3 rounded-xl text-base font-semibold border-2 border-slate-200 hover:border-indigo-400 transition-all bg-white text-slate-700 text-left';
+        btn.textContent = opt;
+        btn.onclick = function() {
+            document.querySelectorAll('#exam-options button').forEach(b => {
+                b.className = 'px-4 py-3 rounded-xl text-base font-semibold border-2 border-slate-200 bg-white text-slate-700 text-left';
+            });
+            btn.className = 'px-4 py-3 rounded-xl text-base font-semibold border-2 border-indigo-500 bg-indigo-50 text-indigo-700 ring-2 ring-indigo-300 text-left';
+            btn.dataset.selected = 'true';
+        };
+        container.appendChild(btn);
+    });
+}
+
+function checkExamAnswer() {
+    const isCorrect = (userInput, expectedForm) => {
+        const variations = getAcceptedVariations(expectedForm);
+        return variations.includes(userInput.toLowerCase().trim());
+    };
+
+    const successClass = "w-full px-4 py-3 bg-green-50 border-2 border-green-500 rounded-lg text-green-700 font-bold text-lg";
+    const errorClass = "w-full px-4 py-3 bg-red-50 border-2 border-red-500 rounded-lg text-red-700 font-bold text-lg";
+
+    let userCorrect = false;
+    let expectedText = '';
+
+    if (examQuestionType === 'forms') {
+        const inputV2 = document.getElementById('exam-input-v2');
+        const inputV3 = document.getElementById('exam-input-v3');
+        const v2Ok = isCorrect(inputV2.value, examCurrentVerb.v2);
+        const v3Ok = isCorrect(inputV3.value, examCurrentVerb.v3);
+        userCorrect = v2Ok && v3Ok;
+        expectedText = examCurrentVerb.v2 + ' / ' + examCurrentVerb.v3;
+        inputV2.className = v2Ok ? successClass : errorClass;
+        inputV3.className = v3Ok ? successClass : errorClass;
+        inputV2.value = v2Ok ? inputV2.value.trim() : examCurrentVerb.v2;
+        inputV3.value = v3Ok ? inputV3.value.trim() : examCurrentVerb.v3;
+        inputV2.disabled = true;
+        inputV3.disabled = true;
+        if (!v2Ok) recordMistake(examCurrentVerb, 'v2');
+        if (!v3Ok) recordMistake(examCurrentVerb, 'v3');
+    } else {
+        const selectedBtn = document.querySelector('#exam-options button[data-selected="true"]');
+        if (examQuestionType === 'v1') {
+            expectedText = examCurrentVerb.v1;
+            userCorrect = selectedBtn !== null && selectedBtn.textContent.trim() === examCurrentVerb.v1;
+        } else if (examQuestionType === 'v2') {
+            expectedText = examCurrentVerb.v2;
+            userCorrect = selectedBtn !== null && selectedBtn.textContent.trim() === examCurrentVerb.v2;
+        } else if (examQuestionType === 'v3') {
+            expectedText = examCurrentVerb.v3;
+            userCorrect = selectedBtn !== null && selectedBtn.textContent.trim() === examCurrentVerb.v3;
+        } else if (examQuestionType === 'translation') {
+            expectedText = getVerbTranslation(examCurrentVerb);
+            userCorrect = selectedBtn !== null && selectedBtn.textContent.trim() === expectedText;
+        }
+        if (!userCorrect) {
+            recordMistake(examCurrentVerb, examQuestionType === 'translation' ? 'spelling' : examQuestionType);
+        }
+    }
+
+    if (userCorrect) {
+        examScore++;
+    } else {
+        examMistakes++;
+        examWrongList.push({ verb: examCurrentVerb, type: examQuestionType, expected: expectedText });
+    }
+
+    document.getElementById('exam-score').textContent = examScore;
+    document.getElementById('exam-mistakes').textContent = examMistakes;
+    document.getElementById('exam-feedback').textContent = userCorrect ? __('letCorrect') : __('letWrong') + ': ' + expectedText;
+    document.getElementById('exam-feedback').className = 'mt-6 p-4 rounded-lg text-center font-medium ' + (userCorrect ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700');
+    document.getElementById('exam-feedback').classList.remove('hidden');
+    document.getElementById('btn-exam-check').classList.add('hidden');
+    document.getElementById('btn-exam-next').classList.remove('hidden');
+}
+
+function nextExamQuestion() {
+    examIdx++;
+    if (examIdx < examQueue.length) {
+        updateExamProgress();
+        loadExamQuestion();
+    } else {
+        showExamResults();
+    }
+}
+
+function updateExamProgress() {
+    const total = examQueue.length;
+    const progress = Math.round(((examIdx + 1) / total) * 100);
+    document.getElementById('exam-progress-bar').style.width = progress + '%';
+    document.getElementById('exam-progress').textContent = __('trQuestion') + ' ' + (examIdx + 1) + ' ' + __('trOf') + ' ' + total;
+}
+
+function calcExamGrade(percent) {
+    if (percent === 100) return { grade: 'A+', label: __('examGradePerfect') };
+    if (percent >= 90) return { grade: 'A', label: __('examGradeExcellent') };
+    if (percent >= 75) return { grade: 'B', label: __('examGradeGood') };
+    if (percent >= 60) return { grade: 'C', label: __('examGradeFair') };
+    return { grade: 'D', label: __('examGradePoor') };
+}
+
+function showExamResults() {
+    document.getElementById('exam-active').classList.add('hidden');
+    document.getElementById('exam-results').classList.remove('hidden');
+
+    document.getElementById('exam-result-correct').textContent = examScore;
+    document.getElementById('exam-result-wrong').textContent = examMistakes;
+    document.getElementById('exam-result-time').textContent = getSessionDuration();
+    stopSessionTimer();
+
+    const total = examQueue.length;
+    const percent = total > 0 ? Math.round((examScore / total) * 100) : 0;
+    const grade = calcExamGrade(percent);
+    document.getElementById('exam-grade').textContent = grade.grade;
+    document.getElementById('exam-grade-label').textContent = grade.label;
+
+    const reviewBtn = document.getElementById('btn-exam-review');
+    reviewBtn.classList.toggle('hidden', examWrongList.length === 0);
+
+    const emptyEl = document.getElementById('exam-review-empty');
+    const listEl = document.getElementById('exam-review-list');
+    emptyEl.classList.toggle('hidden', examWrongList.length > 0);
+    listEl.innerHTML = '';
+    examWrongList.forEach(function(item) {
+        const row = document.createElement('div');
+        row.className = 'flex justify-between items-center gap-3 px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 text-sm';
+        row.innerHTML = '<span class="font-semibold text-slate-700">' + item.verb.v1 + '</span><span class="text-slate-500">' + (item.expected || '') + '</span>';
+        listEl.appendChild(row);
+    });
+
+    trackSessionEnd(examScore, total);
+}
+
+function startExam() {
+    examQueue = getExamVerbs();
+    if (examQueue.length === 0) return;
+    examIdx = 0;
+    examScore = 0;
+    examMistakes = 0;
+    examWrongList = [];
+
+    document.getElementById('exam-start').classList.add('hidden');
+    document.getElementById('exam-results').classList.add('hidden');
+    document.getElementById('exam-active').classList.remove('hidden');
+
+    updateExamProgress();
+    startSessionTimer('exam-timer');
+    loadExamQuestion();
+}
+
+function resetExam() {
+    document.getElementById('exam-results').classList.add('hidden');
+    document.getElementById('exam-start').classList.remove('hidden');
+}
+
 // ================= РАБОТА НАД ОШИБКАМИ =================
 let mistakesMode = 'forms';
 let mistakesQueue = [];
@@ -3769,7 +4063,7 @@ document.addEventListener('keydown', function(event) {
     // Tab shortcuts 1-9
     const num = parseInt(event.key);
     if (num >= 1 && num <= 9) {
-        const tabs = ['dashboard', 'dictionary', 'flashcards', 'letters', 'trainer', 'mistakes', 'speed', 'stats', 'updates'];
+        const tabs = ['dashboard', 'dictionary', 'flashcards', 'letters', 'trainer', 'mistakes', 'speed', 'exam', 'stats'];
         switchTab(tabs[num - 1]);
         return;
     }
@@ -3823,6 +4117,14 @@ document.addEventListener('keydown', function(event) {
                 const nx = document.getElementById('btn-mistakes-quiz-next');
                 if (!nx.classList.contains('hidden')) nextMistakesQuestion();
             }
+        }
+        else if (!document.getElementById('view-exam').classList.contains('hidden')) {
+            const examActive = document.getElementById('exam-active');
+            if (examActive.classList.contains('hidden')) return;
+            const ck = document.getElementById('btn-exam-check');
+            const nx = document.getElementById('btn-exam-next');
+            if (!ck.classList.contains('hidden')) checkExamAnswer();
+            else if (!nx.classList.contains('hidden')) nextExamQuestion();
         }
         else if (!document.getElementById('view-speed').classList.contains('hidden')) {
             const speedCheck = document.getElementById('btn-speed-check');
@@ -4123,6 +4425,13 @@ switchTab = function(tabId) {
         renderStats();
     } else if (tabId === 'dashboard') {
         renderHome();
+    } else if (tabId === 'exam') {
+        if (document.getElementById('exam-results').classList.contains('hidden') &&
+            !document.getElementById('exam-active').classList.contains('hidden')) {
+            // keep active exam state
+        } else {
+            resetExam();
+        }
     }
     if (tabId !== 'dashboard') {
         settings.lastActiveTab = tabId;
