@@ -1409,6 +1409,17 @@ body.dark .egg-toast {
     border-color: var(--primary-light) !important;
     color: var(--primary) !important;
 }
+.trainer-group-btn.bg-indigo-600,
+.tr-mode-btn.bg-indigo-600,
+.dict-group-btn.bg-indigo-600,
+.trainer-group-btn.bg-indigo-600:hover,
+.tr-mode-btn.bg-indigo-600:hover,
+.dict-group-btn.bg-indigo-600:hover {
+    background: linear-gradient(135deg, var(--gradient-from), var(--gradient-to)) !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 4px 14px var(--primary-glow) !important;
+}
 
 .bg-white.rounded-xl.p-6,
 .bg-white.rounded-xl.p-8,

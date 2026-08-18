@@ -1993,8 +1993,6 @@ function loadTrainerQuestion() {
         transEl.style.display = (settings.showTranslation !== false) ? '' : 'none';
         v1El.textContent = '';
         if (v1Row) v1Row.classList.add('hidden');
-        if (v2Row) v2Row.classList.add('hidden');
-        if (v3Row) v3Row.classList.add('hidden');
         const template = sentenceTemplates[Math.floor(Math.random() * sentenceTemplates.length)];
         currentSentenceForm = template.form;
         currentSentenceTemplate = template.text;
@@ -2005,8 +2003,12 @@ function loadTrainerQuestion() {
         const correctForm = currentSentenceForm === 'v2' ? currentVerb.v2 : currentVerb.v3;
         const expectV2 = currentSentenceForm === 'v2';
         if (expectV2) {
+            if (v2Row) v2Row.classList.remove('hidden');
+            if (v3Row) v3Row.classList.add('hidden');
             if (v2InputWrapper) { v2InputWrapper.classList.remove('hidden'); v2InputWrapper.querySelector('input').focus(); }
         } else {
+            if (v3Row) v3Row.classList.remove('hidden');
+            if (v2Row) v2Row.classList.add('hidden');
             if (v3InputWrapper) { v3InputWrapper.classList.remove('hidden'); v3InputWrapper.querySelector('input').focus(); }
         }
     } else if (trainerMode === 'match') {
@@ -2604,6 +2606,7 @@ function resetExam() {
 // ================= РАБОТА НАД ОШИБКАМИ =================
 let mistakesMode = 'forms';
 let mistakesQueue = [];
+let mistakesLastQueue = [];
 let mistakesIdx = 0;
 let mistakesScore = 0;
 let mistakesTotal = 0;
@@ -2647,6 +2650,7 @@ function startMistakesMode(mode) {
     if (filtered.length === 0) return;
 
     mistakesQueue = filtered;
+    mistakesLastQueue = filtered;
     mistakesIdx = 0;
     mistakesScore = 0;
     mistakesTotal = filtered.length;
@@ -2677,6 +2681,35 @@ function exitMistakesMode() {
     document.getElementById('mistakes-results').classList.add('hidden');
     document.getElementById('mistakes-start').classList.remove('hidden');
     openMistakesTab();
+}
+
+function repeatMistakesMode() {
+    if (mistakesLastQueue.length === 0) {
+        exitMistakesMode();
+        return;
+    }
+    mistakesQueue = mistakesLastQueue;
+    mistakesIdx = 0;
+    mistakesScore = 0;
+    mistakesTotal = mistakesLastQueue.length;
+
+    document.getElementById('mistakes-results').classList.add('hidden');
+    document.getElementById('mistakes-active').classList.remove('hidden');
+
+    document.getElementById('mistakes-forms-mode').classList.add('hidden');
+    document.getElementById('mistakes-letters-mode').classList.add('hidden');
+    document.getElementById('mistakes-quiz-mode').classList.add('hidden');
+    if (mistakesMode === 'forms') {
+        document.getElementById('mistakes-forms-mode').classList.remove('hidden');
+    } else if (mistakesMode === 'letters') {
+        document.getElementById('mistakes-letters-mode').classList.remove('hidden');
+    } else if (mistakesMode === 'quiz') {
+        document.getElementById('mistakes-quiz-mode').classList.remove('hidden');
+    }
+
+    updateMistakesScoreboard();
+    startSessionTimer('mistakes-timer');
+    loadMistakesQuestion();
 }
 
 function updateMistakesScoreboard() {

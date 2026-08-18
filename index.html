@@ -840,11 +840,14 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap justify-center gap-3">
-                        <button onclick="exitMistakesMode()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hover:-translate-y-1" data-i18n="misAgain">
-                            Вернуться к выбору
+                        <button onclick="repeatMistakesMode()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hover:-translate-y-1" data-i18n="misAgain">
+                            Повторить еще раз
                         </button>
                         <button id="btn-mistakes-review" onclick="switchTab('mistakes')" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hover:-translate-y-1 hidden">
                             <i class="fas fa-redo mr-2"></i> <span data-i18n="setMistakes">Повторить ошибки</span>
+                        </button>
+                        <button onclick="exitMistakesMode()" class="text-slate-500 hover:text-slate-700 font-semibold py-3 px-6 rounded-xl transition-colors" data-i18n="misBack">
+                            Вернуться к выбору
                         </button>
                     </div>
                 </div>
