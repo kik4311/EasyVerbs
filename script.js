@@ -2,6 +2,8 @@
 // Copyright (C) 2026 kik4311
 // This program is free software under GPL v3 - see LICENSE
 
+const APP_VERSION = 'v0.6.0-beta';
+
 // База данных неправильных глаголов
 const verbsData = [
     { v1: "be", v2: "was/were", v3: "been", translation: "быть", complexity: 1 },
@@ -4492,6 +4494,8 @@ switchTab = function(tabId) {
 };
 
 window.onload = () => {
+    const versionEl = document.getElementById('app-version');
+    if (versionEl) versionEl.textContent = APP_VERSION;
     if (settings.darkMode) {
         document.body.classList.add('dark');
     }
