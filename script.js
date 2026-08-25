@@ -1248,8 +1248,8 @@ function checkFlashcardAnswer() {
     if (!verb) return;
     const v2Input = document.getElementById('fc-quiz-v2-input').value.trim().toLowerCase();
     const v3Input = document.getElementById('fc-quiz-v3-input').value.trim().toLowerCase();
-    const v2Forms = getAcceptableForms(verb.v2).map(f => f.toLowerCase());
-    const v3Forms = getAcceptableForms(verb.v3).map(f => f.toLowerCase());
+    const v2Forms = getAcceptedVariations(verb.v2).map(f => f.toLowerCase());
+    const v3Forms = getAcceptedVariations(verb.v3).map(f => f.toLowerCase());
     const v2Correct = v2Forms.some(f => f === v2Input);
     const v3Correct = v3Forms.some(f => f === v3Input);
     const resultEl = document.getElementById('fc-quiz-result');
