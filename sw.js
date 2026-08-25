@@ -2,7 +2,7 @@
 // Copyright (C) 2026 kik4311
 // This program is free software under GPL v3 - see LICENSE
 
-const CACHE = 'easyverbs-v0.6.0';
+const CACHE = 'easyverbs-v0.6.1';
 const URLS = [
   '/',
   'index.html',
@@ -11,7 +11,7 @@ const URLS = [
   'translations.js',
   'manifest.json',
   'logo.svg',
-  'logo.png'
+  'logo-dark.svg'
 ];
 
 self.addEventListener('install', function(event) {
