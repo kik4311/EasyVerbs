@@ -1240,6 +1240,7 @@ function loadFlashcardQuestion() {
     document.getElementById('fc-quiz-v3-input').value = '';
     document.getElementById('fc-quiz-progress').textContent = `${fcQuizIndex + 1} / ${fcQuizTotal}`;
     document.getElementById('fc-quiz-result').classList.add('hidden');
+    hideConfidenceBar();
     document.getElementById('fc-quiz-v2-input').focus();
 }
 
@@ -1323,6 +1324,11 @@ function saveConfidence(v1Key, level) {
     const bar = document.getElementById('confidence-bar');
     if (bar) bar.remove();
     showToast(__('confidenceSaved'), 'success');
+}
+
+function hideConfidenceBar() {
+    const bar = document.getElementById('confidence-bar');
+    if (bar) bar.remove();
 }
 
 function getConfidence(v1Key) {
@@ -1605,6 +1611,7 @@ function loadLettersQuestion() {
 
     document.getElementById('letters-feedback').classList.add('hidden');
     document.getElementById('letters-verb-card').classList.add('hidden');
+    hideConfidenceBar();
     document.getElementById('btn-letters-check').classList.remove('hidden');
     document.getElementById('btn-letters-next').classList.add('hidden');
 
@@ -1928,6 +1935,7 @@ function matchCheckCompletion() {
 
 function loadTrainerQuestion() {
     currentVerb = trainerQueue[currentQuestionIndex];
+    hideConfidenceBar();
 
     const transEl = document.getElementById('trainer-translation');
     const v1El = document.getElementById('trainer-v1');
