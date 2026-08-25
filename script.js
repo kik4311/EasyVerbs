@@ -606,7 +606,7 @@ const defaultSettings = {
     bestStreak: 0,
     verbsLearned: [],
     customVerbs: [],
-    showTimer: false,
+    showTimer: true,
     soundEnabled: true,
     useSpacedRep: false,
     verbLastSeen: {},
@@ -1246,8 +1246,8 @@ function loadFlashcardQuestion() {
 function checkFlashcardAnswer() {
     const verb = fcQuizQueue[fcQuizIndex];
     if (!verb) return;
-    const v2Input = document.getElementById('fc-quiz-v2-input').value.trim().toLowerCase();
-    const v3Input = document.getElementById('fc-quiz-v3-input').value.trim().toLowerCase();
+    const v2Input = normalizeTyped(document.getElementById('fc-quiz-v2-input').value);
+    const v3Input = normalizeTyped(document.getElementById('fc-quiz-v3-input').value);
     const v2Forms = getAcceptedVariations(verb.v2).map(f => f.toLowerCase());
     const v3Forms = getAcceptedVariations(verb.v3).map(f => f.toLowerCase());
     const v2Correct = v2Forms.some(f => f === v2Input);
@@ -1435,6 +1435,14 @@ function getSpacedStatus(v1Key) {
 }
 
 // ================= УМНАЯ СИСТЕМА СЛИЧЕНИЯ ОТВЕТОВ =================
+// Визуально одинаковые кириллические символы (случайная раскладка) → латиница
+const HOMOGLYPH_MAP = { 'а': 'a', 'е': 'e', 'о': 'o', 'р': 'p', 'с': 'c', 'х': 'x', 'у': 'y', 'і': 'i', 'ѕ': 's', 'һ': 'h' };
+
+function normalizeTyped(s) {
+    if (!s) return '';
+    return String(s).toLowerCase().trim().replace(/[аеорсхуіѕһ]/g, ch => HOMOGLYPH_MAP[ch] || ch);
+}
+
 function getAcceptedVariations(formStr) {
     let normalized = formStr.toLowerCase().trim();
     let variations = new Set();
@@ -1694,7 +1702,7 @@ function checkLettersAnswer() {
     currentLettersSchema.forEach((item, index) => {
         if (item.isHidden) {
             const inputEl = document.getElementById(`let-input-${index}`);
-            const val = inputEl.value.trim().toLowerCase();
+            const val = normalizeTyped(inputEl.value);
             item.enteredChar = val;
             inputEl.disabled = true;
 
@@ -2098,8 +2106,8 @@ function checkTrainerAnswer() {
     if (trainerMode === 'normal') {
         const inputV2 = document.getElementById('input-v2');
         const inputV3 = document.getElementById('input-v3');
-        const val2 = inputV2.value.trim().toLowerCase();
-        const val3 = inputV3.value.trim().toLowerCase();
+        const val2 = normalizeTyped(inputV2.value);
+        const val3 = normalizeTyped(inputV3.value);
         const v2Correct = isCorrect(val2, currentVerb.v2);
         const v3Correct = isCorrect(val3, currentVerb.v3);
 
@@ -2125,7 +2133,7 @@ function checkTrainerAnswer() {
         }
     } else if (trainerMode === 'reverse-v1') {
         const inputV1 = document.getElementById('input-v1');
-        const val1 = inputV1.value.trim().toLowerCase();
+        const val1 = normalizeTyped(inputV1.value);
         const v1Correct = isCorrect(val1, currentVerb.v1);
 
         inputV1.className = v1Correct ? successClass : errorClass;
@@ -2146,7 +2154,7 @@ function checkTrainerAnswer() {
         }
     } else if (trainerMode === 'reverse-forms') {
         const inputV1 = document.getElementById('input-v1');
-        const val1 = inputV1.value.trim().toLowerCase();
+        const val1 = normalizeTyped(inputV1.value);
         const v1Correct = isCorrect(val1, currentVerb.v1);
 
         inputV1.className = v1Correct ? successClass : errorClass;
@@ -2168,7 +2176,7 @@ function checkTrainerAnswer() {
     } else if (trainerMode === 'sentences') {
         const expectedForm = currentSentenceForm === 'v2' ? currentVerb.v2 : currentVerb.v3;
         const inputField = currentSentenceForm === 'v2' ? document.getElementById('input-v2') : document.getElementById('input-v3');
-        const val = inputField.value.trim().toLowerCase();
+        const val = normalizeTyped(inputField.value);
         const correct = isCorrect(val, expectedForm);
 
         inputField.className = correct ? successClass : errorClass;
@@ -2191,7 +2199,7 @@ function checkTrainerAnswer() {
         }
     } else if (trainerMode === 'audio') {
         const inputV1 = document.getElementById('input-v1');
-        const val = inputV1.value.trim().toLowerCase();
+        const val = normalizeTyped(inputV1.value);
         let expectedForm = '';
         if (currentSentenceForm === 'v1') expectedForm = currentVerb.v1;
         else if (currentSentenceForm === 'v2') expectedForm = currentVerb.v2;
@@ -2216,15 +2224,15 @@ function checkTrainerAnswer() {
         }
     } else if (trainerMode === 'match') {
         const getSlotValue = s => document.querySelector(`#match-slot-${s} .match-value`)?.textContent || '';
-        const v1ok = getAcceptedVariations(currentVerb.v1).some(v => v === getSlotValue('v1').toLowerCase().trim());
-        const v2ok = getAcceptedVariations(currentVerb.v2).some(v => v === getSlotValue('v2').toLowerCase().trim());
-        const v3ok = getAcceptedVariations(currentVerb.v3).some(v => v === getSlotValue('v3').toLowerCase().trim());
+        const v1ok = getAcceptedVariations(currentVerb.v1).some(v => v === normalizeTyped(getSlotValue('v1')));
+        const v2ok = getAcceptedVariations(currentVerb.v2).some(v => v === normalizeTyped(getSlotValue('v2')));
+        const v3ok = getAcceptedVariations(currentVerb.v3).some(v => v === normalizeTyped(getSlotValue('v3')));
         const allOk = v1ok && v2ok && v3ok;
 
         ['v1', 'v2', 'v3'].forEach(slot => {
             const el = document.getElementById(`match-slot-${slot}`);
             if (el) {
-                const ok = getAcceptedVariations(currentVerb[slot]).some(v => v === getSlotValue(slot).toLowerCase().trim());
+                const ok = getAcceptedVariations(currentVerb[slot]).some(v => v === normalizeTyped(getSlotValue(slot)));
                 el.style.borderColor = ok ? '#10b981' : '#ef4444';
                 el.style.backgroundColor = ok ? '#ecfdf5' : '#fef2f2';
             }
@@ -2464,7 +2472,7 @@ function showExamMCQ(correctAnswer, correctArr) {
 function checkExamAnswer() {
     const isCorrect = (userInput, expectedForm) => {
         const variations = getAcceptedVariations(expectedForm);
-        return variations.includes(userInput.toLowerCase().trim());
+        return variations.includes(normalizeTyped(userInput));
     };
 
     const successClass = "w-full px-4 py-3 bg-green-50 border-2 border-green-500 rounded-lg text-green-700 font-bold text-lg";
@@ -2758,8 +2766,8 @@ function loadMistakesFormsQuestion() {
 function checkMistakesFormsAnswer() {
     const inpV2 = document.getElementById('mistakes-input-v2');
     const inpV3 = document.getElementById('mistakes-input-v3');
-    const val2 = inpV2.value.trim().toLowerCase();
-    const val3 = inpV3.value.trim().toLowerCase();
+    const val2 = normalizeTyped(inpV2.value);
+    const val3 = normalizeTyped(inpV3.value);
 
     const isCorrect = (input, expected) => {
         return getAcceptedVariations(expected).includes(input);
@@ -2889,7 +2897,7 @@ function checkMistakesLettersAnswer() {
     mistakesCurrentSchema.forEach((item, idx) => {
         if (item.isHidden) {
             const el = document.getElementById(`mist-let-${idx}`);
-            const val = el.value.trim().toLowerCase();
+            const val = normalizeTyped(el.value);
             item.enteredChar = val;
             el.disabled = true;
             if (val === item.originalChar) {
@@ -3682,7 +3690,7 @@ function loadPrepQuestion() {
 
 function checkPrepAnswer() {
     const input = document.getElementById('prep-input');
-    const answer = input.value.trim().toLowerCase();
+    const answer = normalizeTyped(input.value);
     const acceptable = prepCurrentVerb.preposition.toLowerCase().split('/').map(function(s) { return s.trim(); });
     const correct = acceptable.indexOf(answer) !== -1;
 
@@ -4291,7 +4299,7 @@ function checkSpeedAnswer() {
 
     const input = document.getElementById('speed-input');
     const feedback = document.getElementById('speed-feedback');
-    const answer = input.value.trim().toLowerCase();
+    const answer = normalizeTyped(input.value);
     let correct = false;
     let correctAnswer = '';
 

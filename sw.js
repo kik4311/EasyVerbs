@@ -2,7 +2,7 @@
 // Copyright (C) 2026 kik4311
 // This program is free software under GPL v3 - see LICENSE
 
-const CACHE = 'easyverbs-v0.5.3';
+const CACHE = 'easyverbs-v0.6.0';
 const URLS = [
   '/',
   'index.html',
@@ -34,15 +34,17 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('fetch', function(event) {
   event.respondWith(
-    caches.match(event.request).then(function(response) {
-      if (response) return response;
-      return fetch(event.request).then(function(resp) {
-        if (!resp || resp.status !== 200) return resp;
-        return caches.open(CACHE).then(function(cache) {
-          cache.put(event.request, resp.clone());
-          return resp;
+    fetch(event.request).then(function(resp) {
+      if (resp && resp.status === 200 && event.request.method === 'GET') {
+        const copy = resp.clone();
+        caches.open(CACHE).then(function(cache) {
+          cache.put(event.request, copy);
         });
-      }).catch(function() {
+      }
+      return resp;
+    }).catch(function() {
+      return caches.match(event.request).then(function(cached) {
+        if (cached) return cached;
         if (event.request.mode === 'navigate') {
           return caches.match('index.html');
         }
