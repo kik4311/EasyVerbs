@@ -1,3 +1,7 @@
+// EasyVerbs
+// Copyright (C) 2026 kik4311
+// This program is free software under GPL v3 - see LICENSE
+
 const translations = {
     ru: {
         navDictionary: 'Словарь',
