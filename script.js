@@ -2,7 +2,7 @@
 // Copyright (C) 2026 kik4311
 // This program is free software under GPL v3 - see LICENSE
 
-const APP_VERSION = 'v0.6.1-beta';
+const APP_VERSION = 'v0.6.2-beta';
 
 // База данных неправильных глаголов
 const verbsData = [
@@ -1331,6 +1331,20 @@ function saveConfidence(v1Key, level) {
 function hideConfidenceBar() {
     const bar = document.getElementById('confidence-bar');
     if (bar) bar.remove();
+}
+
+// ================= АНКЕТА =================
+const SURVEY_EMBED_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSe904y7agGjGRNohCUWyQCajiEKA2RJdxXR4k8eXgQ5GMkqeQ/viewform?embedded=true';
+
+function toggleSurvey() {
+    const wrap = document.getElementById('survey-frame-wrap');
+    if (!wrap) return;
+    const frame = document.getElementById('survey-frame');
+    const willShow = wrap.classList.contains('hidden');
+    if (willShow && frame && !frame.src) {
+        frame.src = SURVEY_EMBED_URL;
+    }
+    wrap.classList.toggle('hidden', !willShow);
 }
 
 function getConfidence(v1Key) {
