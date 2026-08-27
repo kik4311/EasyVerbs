@@ -2,7 +2,7 @@
 // Copyright (C) 2026 kik4311
 // This program is free software under GPL v3 - see LICENSE
 
-const APP_VERSION = 'v0.6.3-beta';
+const APP_VERSION = 'v0.6.4-beta';
 
 // База данных неправильных глаголов
 const verbsData = [
@@ -886,10 +886,8 @@ function vibrate(pattern) {
 function buzzHaptic(pattern) {
     if (!settings.soundEnabled) return;
     try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        const ctx = new AudioCtx();
-        if (typeof ctx.resume === 'function' && ctx.state !== 'running') ctx.resume();
+        const ctx = getAudioCtx();
+        if (!ctx) return;
         const times = Array.isArray(pattern) && pattern.length ? pattern : [pattern];
         let t = ctx.currentTime + 0.02;
         times.forEach(function(dur) {
@@ -905,7 +903,7 @@ function buzzHaptic(pattern) {
             gain.gain.setValueAtTime(0.12, t + Math.max(d - 0.02, 0.01));
             gain.gain.exponentialRampToValueAtTime(0.001, t + d);
             osc.connect(gain);
-            gain.connect(ctx.destination);
+            gain.connect(sharedAudioGain);
             osc.start(t);
             osc.stop(t + d + 0.01);
             t += d + 0.02;
@@ -3142,6 +3140,8 @@ function openSettings() {
     if (hapticsEl) hapticsEl.checked = settings.haptics !== false;
     const verbGroupEl = document.getElementById('setting-verb-group');
     if (verbGroupEl) verbGroupEl.value = settings.verbGroup || 'all';
+    const alignRightEl = document.getElementById('setting-align-right');
+    if (alignRightEl) alignRightEl.checked = settings.alignRight === true;
 
     const stats = getMistakeStats();
     const statsDisplay = document.getElementById('error-stats-display');
@@ -4084,16 +4084,32 @@ function renderStatsAccuracy() {
 }
 
 // ================= ЗВУКИ =================
+let sharedAudioCtx = null;
+let sharedAudioGain = null;
+
+function getAudioCtx() {
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return null;
+        if (!sharedAudioCtx) {
+            sharedAudioCtx = new AudioCtx();
+            sharedAudioGain = sharedAudioCtx.createGain();
+            sharedAudioGain.connect(sharedAudioCtx.destination);
+        }
+        if (sharedAudioCtx.state !== 'running') sharedAudioCtx.resume();
+        return sharedAudioCtx;
+    } catch (e) { return null; }
+}
+
 function playSound(type) {
     if (!settings.soundEnabled) return;
     try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        const ctx = new AudioCtx();
+        const ctx = getAudioCtx();
+        if (!ctx) return;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
-        gain.connect(ctx.destination);
+        gain.connect(sharedAudioGain);
         if (type === 'correct') {
             osc.frequency.value = 880;
             gain.gain.value = 0.12;
