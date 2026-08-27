@@ -2,7 +2,7 @@
 // Copyright (C) 2026 kik4311
 // This program is free software under GPL v3 - see LICENSE
 
-const APP_VERSION = 'v0.6.2-beta';
+const APP_VERSION = 'v0.6.3-beta';
 
 // База данных неправильных глаголов
 const verbsData = [
