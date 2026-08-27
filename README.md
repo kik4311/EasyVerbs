@@ -2,9 +2,9 @@
 
 # EasyVerbs
 
-### Тренажёр неправильных английских глаголов
+### Irregular English Verbs Trainer
 
-Vanilla JS · PWA · Без фреймворков · Без рекламы
+Vanilla JS · PWA · No frameworks · No ads
 
 [![Version](https://img.shields.io/badge/Version-v0.6.2--beta-blueviolet?style=for-the-badge&logo=semver)](https://github.com/kik4311/EasyVerbs/releases)
 [![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge&logo=gnu)](LICENSE)
@@ -15,52 +15,52 @@ Vanilla JS · PWA · Без фреймворков · Без рекламы
 ![HTML](https://img.shields.io/badge/HTML-177.2k-orange?style=for-the-badge&logo=html5)
 ![CSS](https://img.shields.io/badge/CSS-52.2k-1572B6?style=for-the-badge&logo=css3)
 
-[**Открыть сайт →**](https://kik4311.github.io/EasyVerbs/)
+[**Open the site →**](https://kik4311.github.io/EasyVerbs/)
 
 </div>
 
 ---
 
-## Возможности
+## Features
 
-| Категория | Что умеет |
-|-----------|-----------|
-| **Словарь** | 100+ глаголов V1/V2/V3, поиск, избранное, фильтр по группам |
-| **Карточки** | 3D-флип карточки с викториной |
-| **Буквы** | Вставь пропущенные буквы в форму глагола |
-| **Формы** | 6 режимов тренировки: ввод форм, перевод, предложения, аудио, match, марафон |
-| **Спринт** | 60-секундная гонка на время с таблицей рекордов |
-| **Ошибки** | Работа над ошибками с 3 режимами |
-| **Предлоги** | Тренировка глагольных предлогов |
-| **Статистика** | Точность, сессии, активность за 30 дней, топ ошибок, прогресс по группам |
-| **Тёмная тема** | Авто по системе / вручную, анимированные gradient blobs |
-| **Акценты** | 7 пресетов + ручной выбор цвета |
-| **Озвучка** | Произношение через Web Speech API |
-| **Интервальные повторения** | Умный показ проблемных глаголов |
-| **Достижения** | 9 ачивок за прогресс |
-| **Свои глаголы** | Добавление / экспорт / импорт |
-| **Экспорт статистики** | JSON и CSV |
-| **PWA** | Работает офлайн, устанавливается на телефон |
-| **i18n** | 6 языков интерфейса |
+| Category | What it does |
+|----------|--------------|
+| **Dictionary** | 100+ verbs V1/V2/V3, search, favorites, group filters |
+| **Flashcards** | 3D flip cards with a quiz |
+| **Letters** | Fill in the missing letters of the verb form |
+| **Forms** | 6 training modes: form input, translation, sentences, audio, match, marathon |
+| **Sprint** | 60-second timed race with a leaderboard |
+| **Mistakes** | Work on your mistakes with 3 modes |
+| **Prepositions** | Practice verb prepositions |
+| **Statistics** | Accuracy, sessions, 30-day activity, top mistakes, group progress |
+| **Dark mode** | Auto by system / manual, animated gradient blobs |
+| **Accents** | 7 presets + custom color picker |
+| **Sound** | Pronunciation via Web Speech API |
+| **Spaced repetition** | Smart review of problem verbs |
+| **Achievements** | 9 badges for your progress |
+| **Custom verbs** | Add / export / import |
+| **Export statistics** | JSON and CSV |
+| **PWA** | Works offline, installable on your phone |
+| **i18n** | 6 interface languages |
 
-## Стек
+## Stack
 
 Vanilla JS · CSS Custom Properties · Web Speech API · Web Audio API · Font Awesome 6 · localStorage · GitHub Pages
 
-## Запуск
+## Getting Started
 
-Никаких сборщиков — открыть `index.html` в браузере, и готово.
+No build tools — open `index.html` in your browser and you're done.
 
 ```sh
 git clone https://github.com/kik4311/EasyVerbs.git
 cd EasyVerbs
-# открыть index.html
+# open index.html
 ```
 
-## Лицензия
+## License
 
-Проект распространяется под лицензией [GPL-3.0](LICENSE).
+Distributed under the [GPL-3.0](LICENSE) license.
 
-## Авторы
+## Authors
 
 - [kik4311](https://github.com/kik4311)
