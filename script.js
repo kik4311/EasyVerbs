@@ -872,8 +872,50 @@ function animateCount(el, target, suffix, duration) {
 function vibrate(pattern) {
     if (settings.haptics === false) return;
     try {
-        if (navigator.vibrate) navigator.vibrate(pattern);
+        const v = navigator.vibrate || navigator.webkitVibrate || navigator.msVibrate;
+        if (typeof v === 'function') {
+            v.call(navigator, pattern);
+        } else {
+            buzzHaptic(pattern);
+        }
+    } catch (e) {
+        buzzHaptic(pattern);
+    }
+}
+
+function buzzHaptic(pattern) {
+    if (!settings.soundEnabled) return;
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        if (typeof ctx.resume === 'function' && ctx.state !== 'running') ctx.resume();
+        const times = Array.isArray(pattern) && pattern.length ? pattern : [pattern];
+        let t = ctx.currentTime + 0.02;
+        times.forEach(function(dur) {
+            const ms = typeof dur === 'number' ? dur : 80;
+            if (ms <= 0) { t += 0.01; return; }
+            const d = Math.min(ms / 1000, 0.15);
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.value = 90;
+            gain.gain.setValueAtTime(0, t);
+            gain.gain.linearRampToValueAtTime(0.12, t + 0.012);
+            gain.gain.setValueAtTime(0.12, t + Math.max(d - 0.02, 0.01));
+            gain.gain.exponentialRampToValueAtTime(0.001, t + d);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(t);
+            osc.stop(t + d + 0.01);
+            t += d + 0.02;
+        });
     } catch (e) {}
+}
+
+function toggleHaptics() {
+    saveSettings();
+    if (settings.haptics) vibrate([30, 50, 30]);
 }
 
 function burstConfetti(container) {
