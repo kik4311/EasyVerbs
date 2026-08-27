@@ -6,12 +6,12 @@
 
 Vanilla JS · PWA · Без фреймворков · Без рекламы
 
-[![Version](https://img.shields.io/badge/версия-v0.6.2--beta-blueviolet?style=for-the-badge&logo=semver)](https://github.com/kik4311/EasyVerbs/releases)
+[![Version](https://img.shields.io/badge/Version-v0.6.2--beta-blueviolet?style=for-the-badge&logo=semver)](https://github.com/kik4311/EasyVerbs/releases)
 [![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge&logo=gnu)](LICENSE)
-[![PWA](https://img.shields.io/badge/PWA-✓-ff69b4?style=for-the-badge&logo=pwa)](manifest.json)
-[![Status](https://img.shields.io/badge/статус-готово-28a745?style=for-the-badge&logo=checkmarx)](https://kik4311.github.io/EasyVerbs/)
+[![PWA](https://img.shields.io/badge/PWA-Yes-ff69b4?style=for-the-badge&logo=pwa)](manifest.json)
+[![Status](https://img.shields.io/badge/Status-Ready-28a745?style=for-the-badge&logo=checkmarx)](https://kik4311.github.io/EasyVerbs/)
 
-![JavaScript](https://img.shields.io/badge/JavaScript-354.8k-ES6-F7DF1E?style=for-the-badge&logo=javascript)
+![JavaScript](https://img.shields.io/badge/JavaScript-354.8k-F7DF1E?style=for-the-badge&logo=javascript)
 ![HTML](https://img.shields.io/badge/HTML-177.2k-orange?style=for-the-badge&logo=html5)
 ![CSS](https://img.shields.io/badge/CSS-52.2k-1572B6?style=for-the-badge&logo=css3)
 
