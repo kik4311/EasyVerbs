@@ -534,6 +534,7 @@ function getVerbTranslation(verb) {
     if (verbTranslations[lang] && verbTranslations[lang][verb.v1] !== undefined) {
         return verbTranslations[lang][verb.v1];
     }
+    if (lang === 'en') return verb.v1;
     return verb.translation;
 }
 
@@ -1102,6 +1103,7 @@ function printDictionary() {
     });
     html += '</tbody></table></body></html>';
     const win = window.open('', '_blank');
+    if (!win) { showToast('Разрешите всплывающие окна для печати'); return; }
     win.document.write(html);
     win.document.close();
     setTimeout(() => { win.print(); }, 500);
@@ -1965,7 +1967,6 @@ function matchPlace(slot) {
     if (!slotEl) return;
     const btn = document.querySelector(`.match-form-btn[data-form="${matchSelectedForm}"]`);
     const label = btn ? btn.dataset.label : '';
-    const prevSlotFormKey = matchSlots[slot];
     matchSlots[slot] = matchSelectedForm;
     slotEl.textContent = label;
     const prevSlot = Object.keys(matchSlots).find(k => matchSlots[k] === matchSelectedForm && k !== slot);
@@ -3516,7 +3517,7 @@ function exportResults(format = 'json') {
     } else if (format === 'csv') {
         let csv = __('csvHeader') + '\n';
         Object.entries(errorStats).forEach(([key, data]) => {
-            csv += `"${data.verb.v1}","${data.getVerbTranslation(verb)}",${data.mistakes},"${data.lastMistake}"\n`;
+            csv += `"${data.verb.v1}","${getVerbTranslation(data.verb)}",${data.mistakes},"${data.lastMistake}"\n`;
         });
         const dataBlob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         downloadFile(dataBlob, `verb-trainer-errors-${new Date().getTime()}.csv`);
@@ -4036,16 +4037,16 @@ function renderStatsGroups() {
     const container = document.getElementById('stats-groups');
     if (!container) return;
     const groups = [
-        { id: '1', label: 'AAA' },
-        { id: '2', label: 'ABB' },
-        { id: '3', label: 'ABA' },
-        { id: '4', label: 'ABC' },
+        { id: 1, label: 'AAA' },
+        { id: 2, label: 'ABB' },
+        { id: 3, label: 'ABA' },
+        { id: 4, label: 'ABC' },
     ];
-    const totalVerbs = verbsData.length;
+    const allVerbs = getFullVerbList();
     const learned = settings.verbsLearned || [];
     container.innerHTML = groups.map(function(g) {
-        const groupVerbs = verbsData.filter(v => v.complexity == g.id).length;
-        const groupLearned = verbsData.filter(v => v.complexity == g.id && learned.includes(v.v1)).length;
+        const groupVerbs = allVerbs.filter(v => classifyVerb(v) === g.id).length;
+        const groupLearned = allVerbs.filter(v => classifyVerb(v) === g.id && learned.includes(v.v1)).length;
         const pct = groupVerbs > 0 ? Math.round((groupLearned / groupVerbs) * 100) : 0;
         return `
             <div>
@@ -4299,7 +4300,6 @@ function startSpeedRun() {
 
     loadSpeedQuestion();
     startSpeedTimer();
-    startSessionTimer();
 }
 
 function startSpeedTimer() {
@@ -4459,7 +4459,7 @@ function endSpeedRun() {
     document.getElementById('speed-new-record').classList.toggle('hidden', !isNewRecord);
     if (isNewRecord) {
         settings.speedHighScore = speedScore;
-        saveSettings();
+        localStorage.setItem('verbTrainerSettings', JSON.stringify(settings));
     }
     document.getElementById('speed-high-score-display').textContent = Math.max(prev, speedScore);
 
